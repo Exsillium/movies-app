@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axiosInstance from "../apis/config";
 
 export default function TvShowModal({ show, isOpen, onClose }) {
+  const navigate = useNavigate();
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -141,6 +143,18 @@ export default function TvShowModal({ show, isOpen, onClose }) {
                         </div>
                       </>
                     )}
+
+                    <div className="mt-4">
+                      <button
+                        className="tv-card-link"
+                        onClick={() => {
+                          onClose();
+                          navigate(`/tv/${show.id}`);
+                        }}
+                      >
+                        View More Details
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}

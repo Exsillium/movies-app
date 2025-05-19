@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from "../apis/config";
 import TvShowCard from "../components/TvShowCard";
+import Pagination from "../components/Pagination";
 import '../styles/TvShows.css';
 
 export default function CategoryPage() {
@@ -98,56 +99,11 @@ export default function CategoryPage() {
         ))}
       </div>
 
-      <div className="pagination-container mt-5 d-flex justify-content-center">
-        <ul className="pagination">
-          <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-            <button
-              className="page-link"
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </button>
-          </li>
-          
-          {[...Array(Math.min(5, totalPages))].map((_, index) => {
-            let pageNumber;
-            if (totalPages <= 5) {
-              pageNumber = index + 1;
-            } else if (currentPage <= 3) {
-              pageNumber = index + 1;
-            } else if (currentPage >= totalPages - 2) {
-              pageNumber = totalPages - 4 + index;
-            } else {
-              pageNumber = currentPage - 2 + index;
-            }
-
-            return (
-              <li 
-                key={pageNumber} 
-                className={`page-item ${currentPage === pageNumber ? 'active' : ''}`}
-              >
-                <button
-                  className="page-link"
-                  onClick={() => handlePageChange(pageNumber)}
-                >
-                  {pageNumber}
-                </button>
-              </li>
-            );
-          })}
-
-          <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-            <button
-              className="page-link"
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </button>
-          </li>
-        </ul>
-      </div>
+      <Pagination 
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 } 
