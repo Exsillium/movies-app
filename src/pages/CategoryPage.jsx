@@ -94,7 +94,7 @@ export default function CategoryPage() {
       <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
         {shows.map(show => (
           <div key={show.id} className="col">
-            <TvShowCard show={show} />
+            <TvShowCard show={show} type='tv' />
           </div>
         ))}
       </div>

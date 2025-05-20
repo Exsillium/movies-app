@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense , useEffect} from "react";
 import "./App.css";
-import Navbar from "./components/NavBar";
+import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useSelector } from "react-redux";
 
 
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -16,6 +17,14 @@ const TvShowsPage = lazy(() => import("./pages/TvShowsPage"));
 const CategoryPage = lazy(() => import("./pages/CategoryPage"));
 
 function App() {
+  const wishItem = useSelector((state) => state.wishlist.wishItem || []);
+ 
+
+   useEffect(() => {
+    localStorage.setItem('wishList', JSON.stringify(wishItem));
+  }, [wishItem]);
+
+
   return (
     <BrowserRouter>
       <Navbar />

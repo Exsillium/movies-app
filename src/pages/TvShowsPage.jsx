@@ -72,7 +72,7 @@ export default function TvShowsPage() {
       </div>
     );
   }
-
+  const type = 'tv';
   const renderCategory = (categoryKey) => {
     const category = categories[categoryKey];
     
@@ -93,6 +93,7 @@ export default function TvShowsPage() {
         <ShowsSlider 
           shows={category.data} 
           title={category.title}
+          type={type}
         />
       </div>
     );
