@@ -15,6 +15,7 @@ export default function TvShowDetailsPage() {
   const [error, setError] = useState(null);
   const api_key = `c3ba834e295dac6c3509ddb9e2387366`;
   const imageBaseUrl = "https://image.tmdb.org/t/p/original";
+  const type = 'tv';
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -57,7 +58,7 @@ export default function TvShowDetailsPage() {
         </div>
         {details.similar.length > 0 && (
           <section className="mt-5">
-            <ShowsSlider shows={details.similar} title="Similar Shows" />
+            <ShowsSlider shows={details.similar} title="Similar Shows" type={type} />
           </section>
         )}
       </div>

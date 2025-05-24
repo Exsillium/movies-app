@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import TvShowCard from './TvShowCard';
 
-export default function ShowsSlider({ shows, title }) {
+export default function ShowsSlider({ shows, title , type }) {
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(true);
 
@@ -50,7 +50,7 @@ export default function ShowsSlider({ shows, title }) {
       >
         {shows.map((show) => (
           <div key={show.id} className="show-card-wrapper">
-            <TvShowCard show={show} />
+            <TvShowCard show={show} type={type} />
           </div>
         ))}
       </div>

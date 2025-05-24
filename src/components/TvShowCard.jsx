@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import TvShowModal from './TvShowModal';
 
-export default function TvShowCard({ show }) {
+export default function TvShowCard({ show , type }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
-  
+   const isTv = type === "tv";
+
+  let detailsLink = isTv ? `/tv/${show.id}` : `/movie/${show.id}`;
   return (
     <>
       <div className="tv-card">
@@ -30,7 +32,7 @@ export default function TvShowCard({ show }) {
             {show.overview}
           </p>
           <Link 
-            to={`/tv/${show.id}`}
+            to={detailsLink}
             className="tv-card-link"
           >
             View Details
@@ -42,6 +44,7 @@ export default function TvShowCard({ show }) {
         show={show}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        type={type}
       />
     </>
   );
