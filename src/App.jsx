@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router";
-import { lazy, Suspense , useEffect} from "react";
+import { lazy, Suspense, useEffect } from "react";
 import "./App.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useSelector } from "react-redux";
-
+import LoginPage from "./pages/Login";
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const MovieDetailsPage = lazy(() => import("./pages/MovieDetailsPage"));
@@ -17,34 +17,33 @@ const TvShowsPage = lazy(() => import("./pages/TvShowsPage"));
 const CategoryPage = lazy(() => import("./pages/CategoryPage"));
 
 function App() {
-  const wishItem = useSelector((state) => state.wishlist.wishItem || []);
- 
+	const wishItem = useSelector((state) => state.wishlist.wishItem || []);
 
-   useEffect(() => {
-    localStorage.setItem('wishList', JSON.stringify(wishItem));
-  }, [wishItem]);
+	useEffect(() => {
+		localStorage.setItem("wishList", JSON.stringify(wishItem));
+	}, [wishItem]);
 
-
-  return (
-    <BrowserRouter>
-      <Navbar />
-      <div className="container my-5">
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/movie/:id" element={<MovieDetailsPage />} />
-            <Route path="/tv" element={<TvShowsPage />} />
-            <Route path="/tv/:id" element={<TvShowDetailsPage />} />
-            <Route path="/category/:category" element={<CategoryPage />} />
-            <Route path="/wishlist" element={<WishlistPage />} />
-            <Route path="/search/:query" element={<SearchResultsPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Suspense>
-      </div>
-      <Footer />
-    </BrowserRouter>
-  );
+	return (
+		<BrowserRouter>
+			<Navbar />
+			<div className="container my-5">
+				<Suspense fallback={<div>Loading...</div>}>
+					<Routes>
+						<Route path="/" element={<HomePage />} />
+						<Route path="/login" element={<LoginPage />} />
+						<Route path="/movie/:id" element={<MovieDetailsPage />} />
+						<Route path="/tv" element={<TvShowsPage />} />
+						<Route path="/tv/:id" element={<TvShowDetailsPage />} />
+						<Route path="/category/:category" element={<CategoryPage />} />
+						<Route path="/wishlist" element={<WishlistPage />} />
+						<Route path="/search/:query" element={<SearchResultsPage />} />
+						<Route path="*" element={<NotFoundPage />} />
+					</Routes>
+				</Suspense>
+			</div>
+			<Footer />
+		</BrowserRouter>
+	);
 }
 
 export default App;
