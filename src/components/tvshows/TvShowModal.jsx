@@ -1,24 +1,22 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../apis/config";
+import { tmdbApi } from "../../apis/config";
 
 export default function TvShowModal({ show, isOpen, onClose, type }) {
 	const navigate = useNavigate();
 	const [details, setDetails] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-	const api_key = `c3ba834e295dac6c3509ddb9e2387366`;
 	const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
 
 	const isTv = type === "tv";
-	const endpoint = isTv
-		? `/tv/${show.id}?api_key=${api_key}`
-		: `/movie/${show.id}?api_key=${api_key}`;
+	const endpoint = isTv ? `/tv/${show.id}` : `/movie/${show.id}`;
 
 	useEffect(() => {
 		if (isOpen && show) {
 			setLoading(true);
-			axiosInstance
+			setError(null); // Reset error state
+			tmdbApi
 				.get(endpoint)
 				.then((response) => {
 					setDetails(response.data);
@@ -29,7 +27,7 @@ export default function TvShowModal({ show, isOpen, onClose, type }) {
 					setLoading(false);
 				});
 		}
-	}, [isOpen, show]);
+	}, [isOpen, show, endpoint]);
 
 	if (!isOpen) return null;
 

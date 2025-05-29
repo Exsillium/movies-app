@@ -4,12 +4,6 @@ import { use, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addSessionId } from "../store/slice/sessionId";
 
-// check for request_token in the query params
-// if it exists, get the sessionId from the server
-// if the sessionId exists, store it in localStorage
-// if the sessionId exists in localStorage, navigate to /home
-// if the sessionId does not exist, show the login button
-
 export default function useAuthentication() {
 	const [searchParams] = useSearchParams();
 	const { sessionId, isLoading } = useSessionId(

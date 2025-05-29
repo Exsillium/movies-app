@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/TvShows.css";
 import ShowsSlider from "../components/tvshows/ShowsSlider";
-import axiosInstance from "../apis/config";
+import { tmdbApi } from "../apis/config";
 
 export default function TvShowsPage() {
 	const [popularTV, setPopularTV] = useState([]);
@@ -10,7 +10,6 @@ export default function TvShowsPage() {
 	const [airingTV, setAiringTV] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-	const api_key = `c3ba834e295dac6c3509ddb9e2387366`;
 
 	const categories = {
 		popular: {
@@ -35,11 +34,13 @@ export default function TvShowsPage() {
 
 	useEffect(() => {
 		const fetchAllShows = async () => {
+			setLoading(true);
+			setError(null);
 			try {
 				const [popularRes, topRatedRes, airingRes] = await Promise.all([
-					axiosInstance.get(`/tv/popular?api_key=${api_key}`),
-					axiosInstance.get(`/tv/top_rated?api_key=${api_key}`),
-					axiosInstance.get(`/tv/on_the_air?api_key=${api_key}`),
+					tmdbApi.get(`/tv/popular`),
+					tmdbApi.get(`/tv/top_rated`),
+					tmdbApi.get(`/tv/on_the_air`),
 				]);
 
 				setPopularTV(popularRes.data.results);

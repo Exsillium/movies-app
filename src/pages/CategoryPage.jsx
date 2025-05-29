@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import TvShowCard from "../components/tvshows/TvShowCard";
 import Pagination from "../components/tvshows/Pagination";
 import "../styles/TvShows.css";
-import axiosInstance from "../apis/config";
+import { tmdbApi } from "../apis/config";
 
 export default function CategoryPage() {
 	const { category } = useParams();
@@ -13,7 +13,6 @@ export default function CategoryPage() {
 	const [error, setError] = useState(null);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(0);
-	const api_key = `c3ba834e295dac6c3509ddb9e2387366`;
 
 	const categoryConfig = {
 		popular: {
@@ -39,9 +38,8 @@ export default function CategoryPage() {
 		const fetchShows = async () => {
 			setLoading(true);
 			try {
-				const response = await axiosInstance.get(
-					`${categoryConfig[category].endpoint}?api_key=${api_key}&page=${currentPage}`
-				);
+				const endpoint = `${categoryConfig[category].endpoint}?page=${currentPage}`;
+				const response = await tmdbApi.get(endpoint);
 				setShows(response.data.results);
 				setTotalPages(response.data.total_pages);
 				setLoading(false);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axiosInstance from "../apis/config";
+import { tmdbApi } from "../apis/config";
 import ShowsSlider from "../components/tvshows/ShowsSlider";
 import HeroSection from "../components/details/HeroSection";
 import ShowInfo from "../components/details/ShowInfo";
@@ -13,17 +13,18 @@ export default function TvShowDetailsPage() {
 	const [details, setDetails] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-	const api_key = `c3ba834e295dac6c3509ddb9e2387366`;
 	const imageBaseUrl = "https://image.tmdb.org/t/p/original";
 	const type = "tv";
 
 	useEffect(() => {
 		const fetchDetails = async () => {
+			setLoading(true);
+			setError(null);
 			try {
 				const [showDetails, credits, similar] = await Promise.all([
-					axiosInstance.get(`/tv/${id}?api_key=${api_key}`),
-					axiosInstance.get(`/tv/${id}/credits?api_key=${api_key}`),
-					axiosInstance.get(`/tv/${id}/similar?api_key=${api_key}`),
+					tmdbApi.get(`/tv/${id}`),
+					tmdbApi.get(`/tv/${id}/credits`),
+					tmdbApi.get(`/tv/${id}/similar`),
 				]);
 				setDetails({
 					...showDetails.data,

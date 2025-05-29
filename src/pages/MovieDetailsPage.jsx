@@ -1,23 +1,19 @@
 import RecommendedMovies from "../components/movies/RecommendedMovies";
 import { useParams } from "react-router";
-import axiosInstance from "../apis/config";
+import { tmdbApi } from "../apis/config";
 import { useState, useEffect } from "react";
 import HeroSection from "../components/details/HeroSection";
 
 export default function MovieDetailsPage() {
 	const param = useParams();
-	const [movie, setMovie] = useState([]);
+	const [movie, setMovie] = useState(null); // Initialize with null for better conditional rendering
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-
-	const apiKey = `c3ba834e295dac6c3509ddb9e2387366`;
 
 	async function fetchMovieDetails() {
 		try {
 			setLoading(true);
-			const response = await axiosInstance.get(
-				`/movie/${param.id}?api_key=${apiKey}`
-			);
+			const response = await tmdbApi.get(`/movie/${param.id}`);
 			setMovie(response.data);
 			setLoading(false);
 		} catch (err) {

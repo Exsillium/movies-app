@@ -4,7 +4,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useSelector } from "react-redux";
 import LoginPage from "./pages/Login";
-import Navbar from "./components/layout/Navbar";
+import Navbar from "./components/layout/navBar/Navbar";
 import Footer from "./components/layout/Footer";
 
 const HomePage = lazy(() => import("./pages/HomePage"));

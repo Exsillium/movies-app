@@ -2,7 +2,7 @@ import { Button, Spinner } from "react-bootstrap";
 
 import useAuthentication from "../hooks/useAuthentiction";
 import useNewToken from "../hooks/swr/useNewToken";
-import LoginButton from "../components/auth/loginButton";
+import LoginButton from "../components/account/loginButton";
 
 export default function LoginPage() {
 	const { token, isLoading: isTokenLoading } = useNewToken();
