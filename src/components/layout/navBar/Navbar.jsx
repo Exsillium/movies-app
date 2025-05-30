@@ -12,6 +12,7 @@ import { NavLink } from "react-router";
 import AccountDropdown from "./accountDropdown";
 import SearchInput from "./SearchInput";
 
+
 export default function Navbar() {
 	const sessionId = useSelector((state) => state.sessionId);
 

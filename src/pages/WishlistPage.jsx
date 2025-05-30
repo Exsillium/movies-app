@@ -4,7 +4,7 @@ import { FaHeartBroken } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import fetcher from "../swr/fetcher";
 import useAccountData from "../hooks/swr/useAccountData";
-import { useRemoveFromWatchlist } from "../utils/WatchList";
+import { useRemoveFromWatchlist } from '../hooks/watchlist/useRemoveFromWatchlist';
 import useSWR from "swr";
 import { useState , useEffect } from "react";
 
