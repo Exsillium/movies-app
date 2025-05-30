@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import { lazy, Suspense, useEffect } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useSelector } from "react-redux";
 import LoginPage from "./pages/Login";
 import Navbar from "./components/layout/navBar/Navbar";
 import Footer from "./components/layout/Footer";
@@ -18,11 +17,7 @@ const CategoryPage = lazy(() => import("./pages/CategoryPage"));
 const Movies = lazy(() => import("./pages/MoviesPage"));
 
 function App() {
-  const wishItem = useSelector((state) => state.wishlist.wishItem || []);
-
-  useEffect(() => {
-    localStorage.setItem("wishList", JSON.stringify(wishItem));
-  }, [wishItem]);
+  
 
   return (
     <BrowserRouter>
