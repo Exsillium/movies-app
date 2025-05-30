@@ -1,9 +1,8 @@
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import {
-  useAddToWatchlist,
-  useRemoveFromWatchlist,
-  useIsInWatchlist,
-} from "../../utils/WatchList";
+import { useAddToWatchlist } from "../../hooks/watchlist/useAddToWatchlist";
+import { useRemoveFromWatchlist } from "../../hooks/watchlist/useRemoveFromWatchlist";
+import { useIsInWatchlist } from "../../hooks/watchlist/useIsInWatchlist";
+
 import useAccountData from "../../hooks/swr/useAccountData";
 import { useSelector } from "react-redux";
 
