@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import TvShowCard from "../components/tvshows/TvShowCard";
 import Pagination from "../components/tvshows/Pagination";
-import "../styles/TvShows.css";
+import "../styles/Media.css";
 import { tmdbApi } from "../apis/config";
 
 export default function CategoryPage() {
