@@ -17,12 +17,6 @@ const CategoryPage = lazy(() => import("./pages/CategoryPage"));
 const Movies = lazy(() => import("./pages/MoviesPage"));
 
 function App() {
-	const wishItem = useSelector((state) => state.wishlist.wishItem || []);
-
-	useEffect(() => {
-		localStorage.setItem("wishList", JSON.stringify(wishItem));
-	}, [wishItem]);
-
 	return (
 		<BrowserRouter>
 			<div className="d-flex flex-column min-vh-100">
