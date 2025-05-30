@@ -4,9 +4,13 @@ import TvShowCard from "../components/tvshows/TvShowCard";
 import Pagination from "../components/tvshows/Pagination";
 import "../styles/Media.css";
 import { tmdbApi } from "../apis/config";
+import {
+  movieCategoryConfig,
+  tvCategoryConfig,
+} from "../config/categoryConfig";
 
 export default function CategoryPage() {
-  const { category } = useParams();
+  const { type, category } = useParams();
   const navigate = useNavigate();
   const [shows, setShows] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,20 +18,8 @@ export default function CategoryPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
-  const categoryConfig = {
-    popular: {
-      title: "Popular Shows",
-      endpoint: "/tv/popular",
-    },
-    topRated: {
-      title: "Top Rated Shows",
-      endpoint: "/tv/top_rated",
-    },
-    airing: {
-      title: "Currently Airing Shows",
-      endpoint: "/tv/on_the_air",
-    },
-  };
+  const categoryConfig =
+    type === "movie" ? movieCategoryConfig : tvCategoryConfig;
 
   useEffect(() => {
     if (!categoryConfig[category]) {
@@ -50,7 +42,7 @@ export default function CategoryPage() {
     };
 
     fetchShows();
-  }, [category, currentPage, navigate]);
+  }, [category, currentPage, categoryConfig, navigate]);
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
@@ -92,7 +84,8 @@ export default function CategoryPage() {
       <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
         {shows.map((show) => (
           <div key={show.id} className="col">
-            <TvShowCard show={show} type="tv" />
+            <TvShowCard show={show} type={type} />{" "}
+            {/* <--- type passed dynamically */}
           </div>
         ))}
       </div>

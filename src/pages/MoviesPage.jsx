@@ -24,7 +24,7 @@ export default function MoviesPage() {
   const error = nowPlayingError || popularError || topRatedError;
 
   const categories = {
-    nowPlaying: {
+    now_playing: {
       title: "Now Playing",
       endpoint: "/movie/now_playing",
       data: nowPlaying,
@@ -34,7 +34,7 @@ export default function MoviesPage() {
       endpoint: "/movie/popular",
       data: popularMovies,
     },
-    topRated: {
+    top_rated: {
       title: "Top Rated Movies",
       endpoint: "/movie/top_rated",
       data: topRatedMovies,
