@@ -18,37 +18,39 @@ const CategoryPage = lazy(() => import("./pages/CategoryPage"));
 const Movies = lazy(() => import("./pages/MoviesPage"));
 
 function App() {
-  const wishItem = useSelector((state) => state.wishlist.wishItem || []);
+	const wishItem = useSelector((state) => state.wishlist.wishItem || []);
 
-  useEffect(() => {
-    localStorage.setItem("wishList", JSON.stringify(wishItem));
-  }, [wishItem]);
+	useEffect(() => {
+		localStorage.setItem("wishList", JSON.stringify(wishItem));
+	}, [wishItem]);
 
-  return (
-    <BrowserRouter>
-      <Navbar />
-      <div className="container my-5">
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/movies" element={<Movies />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/movie/:id" element={<MovieDetailsPage />} />
-            <Route path="/tv" element={<TvShowsPage />} />
-            <Route path="/tv/:id" element={<TvShowDetailsPage />} />
-            <Route
-              path="/category/:type/:category"
-              element={<CategoryPage />}
-            />
-            <Route path="/wishlist" element={<WishlistPage />} />
-            <Route path="/search/:query" element={<SearchResultsPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Suspense>
-      </div>
-      <Footer />
-    </BrowserRouter>
-  );
+	return (
+		<BrowserRouter>
+			<div className="d-flex flex-column min-vh-100">
+				<Navbar />
+				<div className="container flex-grow-1 my-5">
+					<Suspense fallback={<div>Loading...</div>}>
+						<Routes>
+							<Route path="/" element={<HomePage />} />
+							<Route path="/movies" element={<Movies />} />
+							<Route path="/login" element={<LoginPage />} />
+							<Route path="/movie/:id" element={<MovieDetailsPage />} />
+							<Route path="/tv" element={<TvShowsPage />} />
+							<Route path="/tv/:id" element={<TvShowDetailsPage />} />
+							<Route
+								path="/category/:type/:category"
+								element={<CategoryPage />}
+							/>
+							<Route path="/wishlist" element={<WishlistPage />} />
+							<Route path="/search/:query" element={<SearchResultsPage />} />
+							<Route path="*" element={<NotFoundPage />} />
+						</Routes>
+					</Suspense>
+				</div>
+				<Footer />
+			</div>
+		</BrowserRouter>
+	);
 }
 
 export default App;

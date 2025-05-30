@@ -33,3 +33,62 @@
 .read-the-docs {
 	color: #888;
 }
+
+/* Login Page Styles */
+
+.login-button {
+	transition: all 0.3s ease !important;
+}
+
+.login-button:hover:not(:disabled) {
+	transform: translateY(-2px);
+	box-shadow: 0 5px 15px rgba(254, 198, 31, 0.3);
+	background: #ffd700 !important;
+}
+
+.login-button:active:not(:disabled) {
+	transform: translateY(0);
+}
+
+.login-button:disabled {
+	background: #ffd97e !important;
+	cursor: not-allowed;
+}
+
+.loading-state .spinner-border {
+	color: #fec61f !important;
+	width: 2rem;
+	height: 2rem;
+}
+
+/* Footer Styles */
+footer {
+	background: linear-gradient(to bottom, #1a1a1a, #000000) !important;
+}
+
+footer .social-links a {
+	font-size: 1.5rem;
+	transition: color 0.3s, transform 0.3s;
+	display: inline-block;
+}
+
+footer .social-links a:hover {
+	color: #fec61f !important;
+	transform: translateY(-3px);
+}
+
+footer .list-unstyled li {
+	margin-bottom: 0.5rem;
+}
+
+footer .list-unstyled a {
+	transition: color 0.3s;
+}
+
+footer .list-unstyled a:hover {
+	color: #fec61f !important;
+}
+
+footer hr {
+	opacity: 0.1;
+}
