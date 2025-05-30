@@ -1,6 +1,5 @@
 import useSWR from "swr";
 import fetcher from "../../swr/fetcher";
-import { useEffect } from "react";
 
 /*
 {

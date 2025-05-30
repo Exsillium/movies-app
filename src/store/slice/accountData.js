@@ -1,29 +1,46 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-	accountData: JSON.parse(localStorage.getItem("accountData")) || [],
-};
+let initialState = null;
 
-const WishSlice = createSlice({
+/*
+{
+	avatar: {
+		gravatar: { hash: "ed4768a1ed34dcb1b1b2f9a222608a05" },
+		tmdb: { avatar_path: null },
+	},
+	id: 20523335,
+	iso_639_1: "ar",
+	iso_3166_1: "EG",
+	name: "",
+	include_adult: false,
+	username: "waseem",
+};
+ */
+
+try {
+	initialState = JSON.parse(localStorage.getItem("accountData"));
+} catch (error) {
+	initialState = null;
+}
+
+const accountDataSlice = createSlice({
 	name: "accountData",
 	initialState,
 	reducers: {
-		addaccountData: (state, action) => {
-			const existingItem = state.accountData.find(
-				(item) => item.id === action.payload.id
-			);
-			if (!existingItem) {
-				state.accountData.push(action.payload);
-			}
+		updateAccountData: (state, action) => {
+			state = action.payload;
+			localStorage.setItem("accountData", JSON.stringify(state));
+			return state;
 		},
 
-		removeaccountData: (state, action) => {
-			state.accountData = state.accountData.filter(
-				(item) => item.id !== action.payload.id
-			);
+		removeAccountData: (state, action) => {
+			state = null;
+			localStorage.removeItem("accountData");
+			return state;
 		},
 	},
 });
 
-export const { addaccountData, removeaccountData } = WishSlice.actions;
-export default WishSlice.reducer;
+export const { updateAccountData, removeAccountData } =
+	accountDataSlice.actions;
+export default accountDataSlice.reducer;

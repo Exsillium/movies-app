@@ -1,12 +1,5 @@
-import {
-	Container,
-	Navbar as BsNavbar,
-	Nav,
-	Form,
-	InputGroup,
-} from "react-bootstrap";
-import { MdSearch } from "react-icons/md";
-import { useState } from "react";
+import { Container, Navbar as BsNavbar, Nav } from "react-bootstrap";
+
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router";
 import AccountDropdown from "./accountDropdown";

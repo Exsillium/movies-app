@@ -31,7 +31,9 @@ export default function AccountDropdown() {
 
 function AccountDataDropdown() {
 	const sessionId = useSelector((state) => state.sessionId);
-	const { isLoading, accountData } = useAccountData(sessionId);
+	const accountData = useSelector((state) => state.accountData);
+	const { isLoading } = useAccountData(sessionId);
+
 	const { largeAvatarUrl, smallAvatarUrl } = useAvatarUrl(accountData);
 	return (
 		<NavDropdown
