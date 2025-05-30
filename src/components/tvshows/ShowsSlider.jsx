@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import TvShowCard from './TvShowCard';
+import React, { useState } from "react";
+import TvShowCard from "./TvShowCard";
 
-export default function ShowsSlider({ shows, title , type }) {
+export default function ShowsSlider({ shows, title, type }) {
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(true);
 
@@ -14,9 +14,12 @@ export default function ShowsSlider({ shows, title , type }) {
   };
 
   const scroll = (direction) => {
-    const container = document.getElementById(`scroll-${title.replace(/\s+/g, '')}`);
-    const scrollAmount = direction === 'left' ? -container.clientWidth : container.clientWidth;
-    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    const container = document.getElementById(
+      `scroll-${title.replace(/\s+/g, "")}`
+    );
+    const scrollAmount =
+      direction === "left" ? -container.clientWidth : container.clientWidth;
+    container.scrollBy({ left: scrollAmount, behavior: "smooth" });
   };
 
   return (
@@ -24,27 +27,27 @@ export default function ShowsSlider({ shows, title , type }) {
       <h3 className="section-title mb-4">{title}</h3>
 
       {showLeftButton && (
-        <button 
+        <button
           className="nav-button left"
-          onClick={() => scroll('left')}
+          onClick={() => scroll("left")}
           aria-label="Scroll left"
         >
           ←
         </button>
       )}
-      
+
       {showRightButton && (
-        <button 
+        <button
           className="nav-button right"
-          onClick={() => scroll('right')}
+          onClick={() => scroll("right")}
           aria-label="Scroll right"
         >
           →
         </button>
       )}
 
-      <div 
-        id={`scroll-${title.replace(/\s+/g, '')}`}
+      <div
+        id={`scroll-${title.replace(/\s+/g, "")}`}
         className="shows-slider"
         onScroll={handleScroll}
       >
@@ -56,4 +59,4 @@ export default function ShowsSlider({ shows, title , type }) {
       </div>
     </div>
   );
-} 
+}
