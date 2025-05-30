@@ -1,24 +1,55 @@
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { addWishList, removeWishList } from "../../store/slice/wishList";
+import {
+  useAddToWatchlist,
+  useRemoveFromWatchlist,
+  useIsInWatchlist,
+} from "../../utils/WatchList";
+import useAccountData from "../../hooks/swr/useAccountData";
+import { useSelector } from "react-redux";
+
 
 export default function HeroSection({ details, imageBaseUrl }) {
   const bgImage = details.backdrop_path
     ? `${imageBaseUrl}${details.backdrop_path}`
     : "https://via.placeholder.com/1200x500?text=No+Backdrop";
 
-  const dispatch = useDispatch();
+  function getMediaType(details) {
+    if (details.first_air_date || details.name) return "tv";
+    if (details.release_date || details.title) return "movie";
+    return "movie";
+  }
 
-  const wishItem = useSelector((state) => state.wishlist.wishItem);
-  const isInWishlist = wishItem.some((item) => item.id === details.id);
+  const sessionId = useSelector((state) => state.sessionId);
+  const { accountData } = useAccountData(sessionId);
+
+  const { inWatchlist, isLoading: loadingWatchlist } = useIsInWatchlist(
+    details.id,
+    accountData?.id,
+    sessionId,
+    getMediaType(details)
+  );
+
+  const { add } = useAddToWatchlist(
+    accountData?.id,
+    sessionId,
+    getMediaType(details)
+  );
+  const { remove } = useRemoveFromWatchlist(
+    accountData?.id,
+    sessionId,
+    getMediaType(details)
+  );
+
 
   const handleWishlistToggle = () => {
-    if (isInWishlist) {
-      dispatch(removeWishList({ id: details.id }));
+    if (!accountData) return;
+    if (inWatchlist) {
+      remove(details.id);
     } else {
-      dispatch(addWishList(details));
+      add(details.id);
     }
   };
+
 
   function getYear(details) {
     if (
@@ -73,7 +104,7 @@ export default function HeroSection({ details, imageBaseUrl }) {
               <span className="me-3">{year}</span>
               <span className="bullet-separator me-3">•</span>
               <span className="status-badge">{details.status}</span>
-              <button
+               <button
                 onClick={handleWishlistToggle}
                 className="btn btn-link ms-3 p-0"
                 style={{
@@ -81,8 +112,11 @@ export default function HeroSection({ details, imageBaseUrl }) {
                   textDecoration: "none",
                   boxShadow: "none",
                 }}
+                
               >
-                {isInWishlist ? (
+                {loadingWatchlist ? (
+                  <span className="spinner-border spinner-border-sm text-secondary" />
+                ) : inWatchlist ? (
                   <FaHeart className="text-danger fs-3" />
                 ) : (
                   <FaRegHeart className="text-secondary fs-3" />

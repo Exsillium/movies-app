@@ -1,15 +1,21 @@
 import { FaHeart } from "react-icons/fa";
+import { Link } from "react-router";
 
-import { useDispatch } from "react-redux";
-import { removeWishList } from "../../store/slice/wishList";
-export default function MovieCard(props) {
-	const { movie } = props;
-
-	const dispatch = useDispatch();
+export default function MovieCard({ movie , onRemove }) {
+	function getMediaType(details) {
+		if (details.first_air_date || details.name) return "tv";
+		if (details.release_date || details.title) return "movie";
+		return "movie";
+	  }
+	
+	const mediaType = getMediaType(movie);
+ 	 const linkTo = `/${mediaType}/${movie.id}`;
 
 	const handleRemoveFromWishlist = () => {
-		dispatch(removeWishList({ id: movie.id }));
-	};
+		if (onRemove) {
+      onRemove(movie.id, getMediaType(movie));
+    }
+	};	
 	const posterUrl = movie.poster_path
 		? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
 		: "https://via.placeholder.com/500x750?text=No+Image";
@@ -18,11 +24,13 @@ export default function MovieCard(props) {
 		<div className="card mb-4 shadow-sm" style={{ borderRadius: "12px" }}>
 			<div className="row g-0">
 				<div className="col-md-4">
+						<Link to={linkTo} className="text-decoration-none text-dark">
 					<img
 						src={posterUrl}
 						className="img-fluid rounded-start"
 						alt={movie.title}
 					/>
+					</Link>
 				</div>
 				<div className="col-md-8 p-3 d-flex flex-column justify-content-between">
 					<div>
