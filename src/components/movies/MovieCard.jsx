@@ -108,9 +108,11 @@ export default function MovieCard({ movie, onRemove }) {
               <span className="ms-2">({movie.vote_count})</span>
             </div>
             <p className="card-text" style={{ fontSize: "0.9rem" }}>
-              {movie.overview.length > 150
-                ? movie.overview.slice(0, 150) + "..."
-                : movie.overview}
+              {movie.overview
+                ? movie.overview.length > 150
+                  ? movie.overview.slice(0, 150) + "..."
+                  : movie.overview
+                : "No description available."}
             </p>
           </div>
           <div className="d-flex justify-content-end">
