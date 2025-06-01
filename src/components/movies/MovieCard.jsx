@@ -78,7 +78,7 @@ export default function MovieCard({ movie, onRemove }) {
                   size={20}
                   style={{ color: "#f1c40f", cursor: "pointer" }}
                 />
-              ) : (
+              ) : sessionId && accountData ? (
                 <button
                   onClick={handleWishlistToggle}
                   className="btn btn-link p-0"
@@ -96,7 +96,7 @@ export default function MovieCard({ movie, onRemove }) {
                     <FaRegHeart className="text-secondary" size={20} />
                   )}
                 </button>
-              )}
+              ) : null}
             </div>
             <p className="text-muted mb-1" style={{ fontSize: "0.85rem" }}>
               {movie.release_date}

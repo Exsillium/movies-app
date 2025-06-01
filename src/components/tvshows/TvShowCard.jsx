@@ -69,23 +69,25 @@ export default function TvShowCard({ show, type }) {
             <Link to={detailsLink} className="tv-card-link">
               View Details
             </Link>
-            <button
-              onClick={handleWishlistToggle}
-              className="btn btn-link p-0"
-              style={{
-                verticalAlign: "middle",
-                textDecoration: "none",
-                boxShadow: "none",
-              }}
-            >
-              {loadingWatchlist ? (
-                <span className="spinner-border spinner-border-sm text-secondary" />
-              ) : inWatchlist ? (
-                <FaHeart className="text-danger" size={20} />
-              ) : (
-                <FaRegHeart className="text-secondary" size={20} />
-              )}
-            </button>
+            {sessionId && accountData ? (
+              <button
+                onClick={handleWishlistToggle}
+                className="btn btn-link p-0"
+                style={{
+                  verticalAlign: "middle",
+                  textDecoration: "none",
+                  boxShadow: "none",
+                }}
+              >
+                {loadingWatchlist ? (
+                  <span className="spinner-border spinner-border-sm text-secondary" />
+                ) : inWatchlist ? (
+                  <FaHeart className="text-danger" size={20} />
+                ) : (
+                  <FaRegHeart className="text-secondary" size={20} />
+                )}
+              </button>
+            ) : null}
           </div>
         </div>
       </div>
