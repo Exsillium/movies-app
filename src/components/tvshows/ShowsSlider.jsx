@@ -24,6 +24,8 @@ export default function ShowsSlider({ shows, title, type }) {
 
 	return (
 		<div className="show-section position-relative">
+			<h3 className="section-title mb-4">{title}</h3>
+
 			{showLeftButton && (
 				<button
 					className="nav-button left"
