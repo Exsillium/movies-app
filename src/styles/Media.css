@@ -734,14 +734,14 @@
 	margin-bottom: 3rem;
 }
 
-.home-page .section-title {
+.section-title {
 	font-size: 2rem;
 	margin-bottom: 2rem;
 	position: relative;
 	display: inline-block;
 }
 
-.home-page .section-title:after {
+.section-title:after {
 	content: "";
 	position: absolute;
 	bottom: -10px;

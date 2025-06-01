@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import fetcher from "../../swr/fetcher";
+import fetcher from "../../../swr/fetcher";
 
 /*
 {
@@ -24,8 +24,10 @@ import fetcher from "../../swr/fetcher";
 }
 */
 
-export default function usePopularMovies() {
-	const { isLoading, error, data } = useSWR("movie/popular", fetcher.get);
-	console.log(data?.results);
-	return { isLoading, error, popMovies: data?.results };
+export default function useTrendingMovies() {
+	const { data, isLoading, error } = useSWR(
+		"/trending/movie/week",
+		fetcher.get
+	);
+	return { isLoading, error, trendingMovies: data?.results };
 }

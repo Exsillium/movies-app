@@ -1,23 +1,18 @@
 import { useSelector } from "react-redux";
-import useAccountData from "../hooks/swr/useAccountData";
 import HeroSlider from "../components/home/HeroSlider";
 import ShowsSlider from "../components/tvshows/ShowsSlider";
-import useSWR from "swr";
-import { tmdbApi } from "../apis/config";
 import "../styles/Media.css";
-
-const fetcher = (url) => tmdbApi.get(url).then((res) => res.data.results);
+import useTrendingMovies from "../hooks/swr/movies/useTrendingMovies";
+import useTrendingTv from "../hooks/swr/tv/useTrendingTv";
+import useUpcomingMovies from "../hooks/swr/movies/useUpcomingMovies";
 
 export default function HomePage() {
-	const sessionId = useSelector((state) => state.sessionId);
-	const { accountData } = useAccountData(sessionId);
-
+	const accountData = useSelector((state) => state.accountData);
 	// Fetch trending movies and shows
-	const { data: trendingMovies } = useSWR("/trending/movie/week", fetcher);
+	const { trendingMovies } = useTrendingMovies();
 
-	const { data: trendingTv } = useSWR("/trending/tv/week", fetcher);
-
-	const { data: upcomingMovies } = useSWR("/movie/upcoming", fetcher);
+	const { trendingTv } = useTrendingTv();
+	const { upcomingMovies } = useUpcomingMovies();
 
 	return (
 		<div className="home-page">

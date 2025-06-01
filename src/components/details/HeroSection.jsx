@@ -3,7 +3,6 @@ import { useAddToWatchlist } from "../../hooks/watchlist/useAddToWatchlist";
 import { useRemoveFromWatchlist } from "../../hooks/watchlist/useRemoveFromWatchlist";
 import { useIsInWatchlist } from "../../hooks/watchlist/useIsInWatchlist";
 
-import useAccountData from "../../hooks/swr/useAccountData";
 import { useSelector } from "react-redux";
 
 export default function HeroSection({ details, imageBaseUrl }) {
