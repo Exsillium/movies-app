@@ -63,7 +63,7 @@ export default function TvShowDetailsPage() {
   return (
     <div className="tv-show-details">
       <HeroSection details={details} imageBaseUrl={imageBaseUrl} />
-      <div className="container py-5">
+      <div className="container py-5 HeroSection">
         <div className="row">
           <div className="col-lg-8">
             <ShowInfo details={details} />

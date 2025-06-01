@@ -23,7 +23,7 @@
 .theme-dark .navbar .nav-link,
 .theme-dark .navbar .navbar-brand,
 .theme-dark .navbar .navbar-toggler-icon {
-  color: var(--text-color) !important;
+  color: #2e2e2e !important;
 }
 
 /* Container */
@@ -268,4 +268,63 @@
   background: #bb2d3b;
   border-color: #bb2d3b;
   transition: all 0.3s ease;
+}
+
+/* Dark mode styles for tv-show-details container and nested elements */
+.theme-dark .tv-show-details {
+  background-color: transparent;
+  color: #eee;
+}
+
+/* Override Bootstrap container padding bg for dark */
+.theme-dark .tv-show-details .container.py-5 {
+  border-radius: 8px;
+}
+
+/* Rows and columns inherit text color */
+.theme-dark .tv-show-details .row,
+.theme-dark .tv-show-details .col-lg-8,
+.theme-dark .tv-show-details .col-lg-4 {
+  color: #ddd;
+}
+
+/* Optional: add subtle box shadows or borders for separation */
+.theme-dark .tv-show-details .col-lg-8,
+.theme-dark .tv-show-details .col-lg-4 {
+  background-color: #222;
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+/* Style the section for similar shows */
+.theme-dark .tv-show-details section.mt-5 {
+  background-color: #1a1a1a;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+/* Headings inside tv-show-details */
+.theme-dark .tv-show-details h1,
+.theme-dark .tv-show-details h2,
+.theme-dark .tv-show-details h3,
+.theme-dark .tv-show-details h4,
+.theme-dark .tv-show-details h5,
+.theme-dark .tv-show-details h6 {
+  color: #f0f0f0;
+}
+
+/* Links, buttons, and interactive elements can have accent color */
+.theme-dark .tv-show-details a,
+.theme-dark .tv-show-details button {
+  color: #90caf9;
+}
+
+.theme-dark .info-card, 
+.theme-dark .info-card-header {
+  background-color: #2e2e2e;
+  color: #ddd;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
 }
