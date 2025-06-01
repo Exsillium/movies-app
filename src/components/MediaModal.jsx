@@ -151,7 +151,7 @@ export default function TvShowModal({ show, isOpen, onClose, type }) {
                             {details.production_companies.map((company) => (
                               <span
                                 key={company.id}
-                                className="badge bg-light text-dark me-2 mb-2"
+                                className="badge bg-secondary text-dark me-2 mb-2"
                               >
                                 {company.name}
                               </span>
