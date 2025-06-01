@@ -1,23 +1,15 @@
-import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { tmdbApi } from "../../apis/config";
-import usePopularMovies from "../../hooks/swr/usePopularMovies";
+import usePopularMovies from "../../hooks/swr/movies/usePopularMovies";
 import SpinnerLoader from "../loaders/spinnerLoader";
+import useSlidrIntervalCounter from "../../hooks/useSliderIntervalCounter";
 
 export default function HeroSlider() {
 	const { popMovies, isLoading, error } = usePopularMovies();
-	const [currentIndex, setCurrentIndex] = useState(0);
 	const imageBaseUrl = "https://image.tmdb.org/t/p/original";
-
-	useEffect(() => {
-		if (popMovies?.length) {
-			const timer = setInterval(() => {
-				setCurrentIndex((prevIndex) => (prevIndex + 1) % popMovies?.length);
-			}, 5000); // Change slide every 5 seconds
-
-			return () => clearInterval(timer);
-		}
-	}, [popMovies]);
+	const { currentIndex, setCurrentIndex } = useSlidrIntervalCounter(
+		popMovies?.length,
+		2000
+	);
 
 	if (isLoading) return <SpinnerLoader />;
 	if (error) return <ErrorMessage error={error} />;
