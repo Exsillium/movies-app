@@ -67,17 +67,10 @@ export default function MoviesPage() {
 
 		return (
 			<div key={categoryKey} className="mb-5">
-				<div className="d-flex align-items-center mb-4">
-					<Link
-						to={`/category/movie/${categoryKey}`}
-						className="category-header d-flex align-items-center text-decoration-none flex-grow-1"
-					>
-						<h2 className="section-title mb-0">{category.title}</h2>
-						<button className="btn btn-link ms-3">View All</button>
-					</Link>
-				</div>
-				<SectionTitle>{category.title}ddd</SectionTitle>
-
+				<SectionTitle
+					title={category.title}
+					href={`/category/movie/${categoryKey}`}
+				/>
 				<ShowsSlider shows={category.data} title={category.title} type={type} />
 			</div>
 		);

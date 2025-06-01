@@ -36,7 +36,10 @@ export default function HomePage() {
 				{/* Trending Movies Section */}
 				{trendingMovies && (
 					<div className="mb-5">
-						<SectionTitle title="Trending Movies" />
+						<SectionTitle
+							href={"/category/movie/trending"}
+							title="Trending Movies"
+						/>
 						<ShowsSlider
 							shows={trendingMovies}
 							title="Trending Movies"
@@ -48,7 +51,10 @@ export default function HomePage() {
 				{/* Trending TV Shows Section */}
 				{trendingTv && (
 					<div className="mb-5">
-						<SectionTitle title="Trending TV Shows" />
+						<SectionTitle
+							href={"/category/tv/trending"}
+							title="Trending TV Shows"
+						/>
 						<ShowsSlider
 							shows={trendingTv}
 							title="Trending TV Shows"
@@ -60,7 +66,10 @@ export default function HomePage() {
 				{/* Upcoming Movies Section */}
 				{upcomingMovies && (
 					<div className="mb-5">
-						<SectionTitle title="Coming Soon" />
+						<SectionTitle
+							href={"/category/movie/upcoming"}
+							title="Coming Soon"
+						/>
 						<ShowsSlider
 							shows={upcomingMovies}
 							title="Coming Soon"
