@@ -1,50 +1,49 @@
-import { Card } from "react-bootstrap";
-import { Link } from "react-router-dom"; // Use react-router-dom
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import TvShowModal from "../MediaModal";
 
 export default function ResultsCard({ movie }) {
-  const imageBase = "https://image.tmdb.org/t/p/w500";
-
-  const linkStyle = {
-    textDecoration: "none",
-    color: "inherit",
-    display: "block",
-    transition: "transform 0.2s ease-in-out",
-  };
-
-  const cardHoverStyle = {
-    cursor: "pointer",
-  };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
+  const isTv = movie.media_type === "tv";
+  const detailsLink = isTv ? `/tv/${movie.id}` : `/movie/${movie.id}`;
+  const title = movie.title || movie.name;
+  const overview = movie.overview || "No overview available.";
 
   return (
-    <Link
-      to={`/movie/${movie.id}`}
-      style={linkStyle}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = "scale(1.03)";
-        e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.2)";
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "scale(1)";
-        e.currentTarget.style.boxShadow = "none";
-      }}
-    >
-      <Card className="h-100 shadow-sm" style={cardHoverStyle}>
-        <Card.Img
-          variant="top"
-          src={
-            movie.poster_path
-              ? `${imageBase}${movie.poster_path}`
-              : "https://via.placeholder.com/500x750?text=No+Image"
-          }
-          alt={movie.title || movie.name}
-          style={{ objectFit: "cover", height: "350px" }}
-        />
-        <Card.Body className="p-2">
-          <Card.Title className="text-center fw-bold">
-            {movie.title || movie.name}
-          </Card.Title>
-        </Card.Body>
-      </Card>
-    </Link>
+    <>
+      <div className="tv-card">
+        <div
+          className="position-relative"
+          onClick={() => setIsModalOpen(true)}
+          style={{ cursor: "pointer" }}
+        >
+          <img
+            src={`${imageBaseUrl}${movie.poster_path}`}
+            className="tv-card-image"
+            alt={title}
+            loading="lazy"
+          />
+          <div className="tv-card-rating">
+            ⭐ {movie.vote_average?.toFixed(1) || "N/A"}
+          </div>
+        </div>
+
+        <div className="tv-card-body">
+          <h5 className="tv-card-title">{title}</h5>
+          <p className="tv-card-overview">{overview}</p>
+          <Link to={detailsLink} className="tv-card-link">
+            View Details
+          </Link>
+        </div>
+      </div>
+
+      <TvShowModal
+        show={movie}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        type={isTv ? "tv" : "movie"}
+      />
+    </>
   );
 }

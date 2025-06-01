@@ -1,56 +1,41 @@
-import { useEffect, useState } from "react";
+import useSWR from "swr";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import ResultsCard from "../components/movies/ResultsCard";
-import { tmdbApi } from "../apis/config";
+import fetcher from "../swr/fetcher";
 
 export default function SearchResultsPage() {
   const { query } = useParams();
-  const [results, setResults] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const searchTerm = decodeURIComponent(query || "");
 
-  useEffect(() => {
-    const fetchSearchResults = async () => {
-      try {
-        setIsLoading(true);
-        const searchTerm = decodeURIComponent(query);
-        const res = await tmdbApi.get("/search/multi", {
-          params: {
-            query: searchTerm,
-            include_adult: false,
-            language: "en-US",
-            page: 1,
-          },
-        });
+  const { data, error, isLoading } = useSWR(
+    searchTerm
+      ? `/search/multi?query=${encodeURIComponent(
+          searchTerm
+        )}&include_adult=false&language=en-US&page=1`
+      : null,
+    fetcher.get
+  );
 
-        const filtered = res.data.results.filter(
-          (item) => item.poster_path && (item.title || item.name)
-        );
-        setResults(filtered);
-      } catch (error) {
-        console.error("Search error:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (query) {
-      fetchSearchResults();
-    }
-  }, [query]);
+  const filteredResults = data?.results?.filter(
+    (item) =>
+      item.media_type !== "person" &&
+      item.poster_path &&
+      (item.title || item.name)
+  );
 
   return (
     <Container className="py-4">
-      <h2 className="mb-4">
-        Search Results for: "{decodeURIComponent(query)}"
-      </h2>
+      <h2 className="mb-4">Search Results for: "{searchTerm}"</h2>
+
+      {error && <div>Error loading results: {error.message}</div>}
 
       {isLoading ? (
         <div>Loading results...</div>
-      ) : results.length > 0 ? (
+      ) : filteredResults?.length > 0 ? (
         <Row xs={1} md={2} lg={4} className="g-4">
-          {results.map((movie) => (
-            <Col key={movie.id}>
+          {filteredResults.map((movie) => (
+            <Col key={`${movie.id}-${movie.media_type}`}>
               <ResultsCard movie={movie} />
             </Col>
           ))}
