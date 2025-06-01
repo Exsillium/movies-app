@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState , useEffect } from "react";
 import { Link } from "react-router-dom";
 import TvShowModal from "../MediaModal";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
@@ -34,13 +34,23 @@ export default function TvShowCard({ show, type }) {
     isTv ? "tv" : "movie"
   );
 
+
+  const [optimisticWatchlist, setOptimisticWatchlist] = useState(inWatchlist);
+  
+  
+      useEffect(() => {
+          setOptimisticWatchlist(inWatchlist);
+      }, [inWatchlist]);
+  
+
   const handleWishlistToggle = () => {
     if (!accountData) return;
-    if (inWatchlist) {
-      remove(show.id);
-    } else {
-      add(show.id);
-    }
+     setOptimisticWatchlist((prev) => !prev);
+        if (optimisticWatchlist) {
+            remove(show.id);
+        } else {
+            add(show.id);
+        }
   };
 
   let detailsLink = isTv ? `/tv/${show.id}` : `/movie/${show.id}`;
@@ -81,7 +91,7 @@ export default function TvShowCard({ show, type }) {
               >
                 {loadingWatchlist ? (
                   <span className="spinner-border spinner-border-sm text-secondary" />
-                ) : inWatchlist ? (
+                ) : optimisticWatchlist ? (
                   <FaHeart className="text-danger" size={20} />
                 ) : (
                   <FaRegHeart className="text-secondary" size={20} />
