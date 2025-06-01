@@ -253,3 +253,19 @@
   color: #bb2d3b; 
 }
 
+.theme-dark .modal-body {
+  background-color: #2e2e2e;
+  color: #ddd;
+}
+
+.theme-dark .modal-header {
+  background-color: #2e2e2e;
+  color: #ddd;
+}
+
+.theme-dark .tv-card-link {
+  color: #ddd !important;
+  background: #bb2d3b;
+  border-color: #bb2d3b;
+  transition: all 0.3s ease;
+}
