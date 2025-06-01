@@ -26,7 +26,7 @@ export default function SearchInput() {
           style={{ maxWidth: "300px" }}
         />
         <InputGroup.Text
-          className="bg-white border-0 cursor-pointer"
+          className="border-0 cursor-pointer"
           onClick={handleSearch}
         >
           <MdSearch size={20} />
