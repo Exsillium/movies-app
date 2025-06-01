@@ -5,6 +5,7 @@ import "../styles/Media.css";
 import useTrendingMovies from "../hooks/swr/movies/useTrendingMovies";
 import useTrendingTv from "../hooks/swr/tv/useTrendingTv";
 import useUpcomingMovies from "../hooks/swr/movies/useUpcomingMovies";
+import SectionTitle from "../components/layout/section/SectionTitle";
 
 export default function HomePage() {
 	const accountData = useSelector((state) => state.accountData);
@@ -35,6 +36,7 @@ export default function HomePage() {
 				{/* Trending Movies Section */}
 				{trendingMovies && (
 					<div className="mb-5">
+						<SectionTitle title="Trending Movies" />
 						<ShowsSlider
 							shows={trendingMovies}
 							title="Trending Movies"
@@ -46,6 +48,7 @@ export default function HomePage() {
 				{/* Trending TV Shows Section */}
 				{trendingTv && (
 					<div className="mb-5">
+						<SectionTitle title="Trending TV Shows" />
 						<ShowsSlider
 							shows={trendingTv}
 							title="Trending TV Shows"
@@ -57,6 +60,7 @@ export default function HomePage() {
 				{/* Upcoming Movies Section */}
 				{upcomingMovies && (
 					<div className="mb-5">
+						<SectionTitle title="Coming Soon" />
 						<ShowsSlider
 							shows={upcomingMovies}
 							title="Coming Soon"
