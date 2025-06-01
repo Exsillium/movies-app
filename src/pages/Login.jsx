@@ -3,6 +3,7 @@ import { FaFilm } from "react-icons/fa";
 
 import useAuthentication from "../hooks/useAuthentiction";
 import LoginButton from "../components/account/loginButton";
+import SpinnerLoader from "../components/loaders/spinnerLoader";
 
 export default function LoginPage() {
 	const { isLoading } = useAuthentication();
@@ -40,10 +41,7 @@ export default function LoginPage() {
 					</div>
 
 					{isLoading ? (
-						<div className="loading-state text-center">
-							<Spinner animation="border" variant="warning" />
-							<p className="mt-3 text-muted">Verifying your credentials...</p>
-						</div>
+						<SpinnerLoader message={"Verifying your credentials..."} />
 					) : (
 						<div className="d-grid">
 							<LoginButton />
