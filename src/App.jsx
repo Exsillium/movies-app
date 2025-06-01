@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LoginPage from "./pages/Login";
