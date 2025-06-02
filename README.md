@@ -1,78 +1,83 @@
-# 🎬 Movies App
+# Project `src` Directory Overview
 
-A feature-rich React-based web application for browsing movies and TV shows, managing a personal wishlist, and exploring detailed information, all powered by The Movie Database (TMDB) API.
+The `src` directory is the heart of the Movies App, containing all the client-side React code, styles, assets, and logic. It's structured to promote modularity and maintainability.
 
-## ✨ Features Implemented
+## Core Features:
 
-- **TMDB API Integration:** Seamlessly fetches and displays data from The Movie Database.
-- **User Authentication:**
-  - Secure login/logout functionality using TMDB's authentication flow.
-  - Session management with Redux and `localStorage`.
-  - Personalized user account dropdown displaying avatar, username, and other details (ID, country, language).
-- **Movie & TV Show Discovery:**
-  - **Home Page:** (Currently a placeholder, ready for featured content).
-  - **Movies Page:** (Route exists, page to be implemented for movie listings).
-  - **TV Shows Page:** Displays categorized TV shows (Popular, Top Rated, Currently Airing) with sliders.
-  - **Category Pages:** Dedicated pages for "Popular," "Top Rated," and "Airing" TV shows with pagination.
-  - **Detailed Views:**
-    - Comprehensive movie and TV show details pages.
-    - **Hero Section:** Backdrop, poster, title, rating, year, status, overview, genres.
-    - **Show Information:** (For TV shows) Seasons, episodes, runtime, type, language, popularity.
-    - **Cast List:** Displays featured cast members.
-    - **Air Dates & Production:** (For TV shows) First/last air dates, production companies with logos.
-    - **Recommended Movies/Similar Shows:** Sliders for related content.
-  - **Quick View Modal:** Click on a TV show/movie card to open a modal with detailed information without leaving the current page.
-- **Wishlist Functionality:**
-  - Add or remove movies/shows to a personal wishlist.
-  - Wishlist data persisted using Redux and `localStorage`.
-  - Dedicated Wishlist page to view and manage saved items.
-- **Search:**
-  - Navbar search input (currently logs to console, `SearchResultsPage` is a placeholder).
-- **Routing & Navigation:**
-  - Client-side routing with `react-router-dom`.
-  - Lazy loading for page components for optimized performance.
-  - User-friendly Navbar with dynamic links.
-- **State Management:**
-  - Centralized state management with Redux Toolkit.
-- **UI & UX:**
-  - Responsive design using Bootstrap.
-  - Loading and error states for a better user experience.
-  - Custom styling for a polished look.
-- **Data Fetching:**
-  - Efficient data fetching, caching, and revalidation using SWR.
+1.  **Movie & TV Show Discovery:**
 
-## 🛠️ Tech Stack
+    - **Homepage:** Features a dynamic hero slider for popular movies, sections for trending movies, trending TV shows, and upcoming movies.
+    - **Dedicated Pages:** Separate pages for browsing all movies and all TV shows, categorized by popularity, ratings, and current status (now playing/airing).
+    - **Category Exploration:** Users can dive deeper into specific categories (e.g., "Popular Movies," "Top Rated TV Shows").
 
-- **Frontend:** React, JavaScript (ES6+)
-- **Routing:** React Router DOM
-- **State Management:** Redux Toolkit
-- **Data Fetching:** SWR, Axios
-- **Styling:** Bootstrap 5, CSS3
-- **Icons:** React Icons
-- **Build Tool:** Vite
+2.  **Detailed Media Information:**
 
-## 📂 Project Structure
+    - **Comprehensive Details Pages:** Individual pages for movies and TV shows display rich information including:
+      - Title, overview, poster, backdrop images.
+      - User ratings (average and count).
+      - Release dates (movies) or first/last air dates (TV shows).
+      - Status (e.g., Released, Ended, In Production).
+      - Genres.
+      - Full cast list.
+      - Production companies (for TV shows).
+      - Number of seasons and episodes, average runtime (for TV shows).
+    - **Similar & Recommended Content:** Suggestions for similar movies/TV shows and specific movie recommendations.
+    - **Quick View Modal:** A modal allows users to quickly preview movie/TV show details without navigating away from the current list.
 
-```
+3.  **User Authentication & Personalization:**
+
+    - **TMDB Integration:** Secure login via The Movie Database (TMDB) account.
+    - **Watchlist Management:** Logged-in users can add or remove movies and TV shows from their personal watchlist.
+    - **Account Information:** Users can view their TMDB account details (username, avatar, country) within the app.
+    - **Personalized Welcome:** Logged-in users are greeted with a personalized welcome message.
+
+4.  **Search Functionality:**
+
+    - **Global Search:** A prominent search bar in the navigation allows users to find movies and TV shows by title or keyword.
+    - **Dedicated Search Results Page:** Displays a clear list of matching movies and TV shows.
+
+5.  **Internationalization (i18n):**
+
+    - **Multi-Language Support:** The UI and content (where available from TMDB) can be displayed in multiple languages (English, Arabic, French, Chinese).
+    - **Dynamic Language Switching:** Users can change the language, and the application updates accordingly, including API calls for translated content.
+    - **RTL Support:** Correctly renders layout for Right-to-Left languages like Arabic.
+
+6.  **Theming:**
+
+    - **Light & Dark Modes:** Users can switch between a light and a dark theme for comfortable viewing. Theme preference is saved locally.
+
+7.  **Responsive & Modern UI:**
+    - **React & Bootstrap:** Built with React and utilizes Bootstrap for a responsive grid system and base components.
+    - **Custom Styling:** Extensive custom CSS for a unique look and feel, including animations and transitions.
+    - **Lazy Loading:** Page components are lazy-loaded to improve initial load times and performance.
+    - **Interactive Elements:** Includes sliders with navigation, modals, and smooth transitions.
+
+## App Structure:
+
 src/
-├── apis/               # Axios instances for API calls (tmdbApi)
-├── assets/             # Static assets (images, svgs)
-├── components/         # Reusable UI components
-│   ├── account/        # Authentication related (LoginButton, LogoutButton)
-│   ├── details/        # Components for detail pages (HeroSection, CastList)
-│   ├── layout/         # Structural components (Navbar, Footer)
-│   ├── movies/         # Movie-specific components (MovieCard, RecommendedMovies)
-│   └── tvshows/        # TV show-specific components (TvShowCard, ShowsSlider)
-├── hooks/              # Custom React hooks
-│   └── swr/            # SWR-based data fetching hooks
-├── pages/              # Top-level page components
-├── store/              # Redux store configuration and slices
-│   └── slice/          # Redux slices (sessionId, wishlist)
-├── styles/             # Global and component-specific styles
-├── App.jsx             # Main application component with routing
-├── main.jsx            # Application entry point
-└── ...
-```
+├── apis/ # API configuration (e.g., Axios instances for TMDB)
+├── assets/ # Static files like images and SVGs
+├── components/ # Reusable UI components
+│ ├── account/ # Login, logout, account-related UI
+│ ├── details/ # UI for movie/TV show detail views
+│ ├── home/ # Components specific to the homepage (e.g., HeroSlider)
+│ ├── layout/ # Main layout parts (Navbar, Footer, Section Titles)
+│ ├── loaders/ # Loading indicators
+│ ├── movies/ # Movie-specific UI (cards, lists)
+│ └── tvshows/ # TV show-specific UI (cards, lists)
+├── config/ # Application-level configurations (e.g., category endpoints)
+├── hooks/ # Custom React Hooks for reusable logic
+│ ├── swr/ # Data fetching hooks using SWR
+│ └── watchlist/ # Hooks for managing user watchlist
+├── pages/ # Top-level components for each route/page
+├── store/ # Redux state management
+│ └── slice/ # Redux slices for different parts of the state
+├── styles/ # Global CSS and theme-specific styles
+├── swr/ # SWR global configurations (e.g., fetcher)
+├── App.jsx # Main application component (routing, global providers)
+├── LanguageContext.jsx # Context for internationalization (i18n)
+├── main.jsx # Entry point of the React application
+└── translations.js # Text translations for different languages
 
 ## 🚀 Getting Started
 
@@ -125,29 +130,9 @@ In the project directory, you can run:
 - `npm run lint`: Lints the project files.
 - `npm run preview`: Serves the production build locally.
 
-## 🔮 Future Enhancements / To-Do
-
-- **Full Search Implementation:** Connect the search input to `SearchResultsPage` to display actual search results.
-- **Movies Page:** Implement a dedicated page for browsing and filtering movies (similar to the TV Shows page).
-- **Complete Placeholder Components:**
-  - `Footer.jsx`
-  - `MovieInfo.jsx` (if distinct movie-specific info is needed beyond `ShowInfo.jsx`)
-  - `LanguageSelector.jsx`
-  - `ReviewList.jsx`
-  - `Tabs.jsx` (for organizing content on detail pages, e.g., Cast, Reviews, Similar)
-- **User Profile Page:** A dedicated page for users to view/edit their TMDB profile information.
-- **Filtering and Sorting:** Add options to filter and sort movies/TV shows on listing pages.
-- **Error Handling:** More granular error handling and user feedback.
-- **Testing:** Implement unit and integration tests.
-- **Deployment:** Set up CI/CD for easy deployment.
-
 ## 🙏 Acknowledgements
 
 - This project uses TMDb API but is not endorsed or certified by TMDb.
 - React Bootstrap for UI components.
 - SWR for data fetching.
 - Redux Toolkit for state management.
-
----
-
-This README provides a comprehensive overview of the Movies App project.
