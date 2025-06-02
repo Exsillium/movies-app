@@ -24,7 +24,11 @@ import fetcher from "../../../swr/fetcher";
 }
 */
 
-export default function usePopularMovies() {
+export default function usePopularMovies(len) {
 	const { isLoading, error, data } = useSWR("movie/popular", fetcher.get);
-	return { isLoading, error, popMovies: data?.results };
+	return {
+		isLoading,
+		error,
+		popMovies: len ? data?.results?.slice(0, len) : data?.results,
+	};
 }

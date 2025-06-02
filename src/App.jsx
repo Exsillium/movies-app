@@ -18,59 +18,77 @@ const CategoryPage = lazy(() => import("./pages/CategoryPage"));
 const Movies = lazy(() => import("./pages/MoviesPage"));
 
 function App() {
-  const [theme, setTheme] = useState("light");
-  const [language, setLanguage] = useState("en");
+	const [theme, setTheme] = useState("light");
+	const [language, setLanguage] = useState("en");
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || "light";
-    setTheme(savedTheme);
-    document.body.classList.remove("theme-light", "theme-dark");
-    document.body.classList.add(`theme-${savedTheme}`);
-  }, []);
+	useEffect(() => {
+		const savedTheme = localStorage.getItem("theme") || "light";
+		setTheme(savedTheme);
+		document.body.classList.remove("theme-light", "theme-dark");
+		document.body.classList.add(`theme-${savedTheme}`);
+	}, []);
 
-  useEffect(() => {
-    const savedLang = localStorage.getItem("language") || "en";
-    setLanguage(savedLang);
-    document.body.setAttribute("dir", savedLang === "ar" ? "rtl" : "ltr");
-  }, []);
+	useEffect(() => {
+		const savedLang = localStorage.getItem("language") || "en";
+		setLanguage(savedLang);
+		document.body.setAttribute("dir", savedLang === "ar" ? "rtl" : "ltr");
+	}, []);
 
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    document.body.classList.remove("theme-light", "theme-dark");
-    document.body.classList.add(`theme-${newTheme}`);
-  };
+	const toggleTheme = () => {
+		const newTheme = theme === "light" ? "dark" : "light";
+		setTheme(newTheme);
+		localStorage.setItem("theme", newTheme);
+		document.body.classList.remove("theme-light", "theme-dark");
+		document.body.classList.add(`theme-${newTheme}`);
+	};
 
-  return (
-    <BrowserRouter>
-      <div className="d-flex flex-column min-vh-100">
-        <Navbar
-          toggleTheme={toggleTheme}
-          currentTheme={theme}
-          language={language}
-          setLanguage={setLanguage}
-        />
-        <div className="container flex-grow-1 my-5">
-          <Suspense fallback={<div>Loading...</div>}>
-            <Routes>
-              <Route path="/" element={<HomePage language={language} />} />
-              <Route path="/movies" element={<Movies language={language} />} />
-              <Route path="/login" element={<LoginPage language={language} />} />
-              <Route path="/movie/:id" element={<MovieDetailsPage language={language} />} />
-              <Route path="/tv" element={<TvShowsPage language={language} />} />
-              <Route path="/tv/:id" element={<TvShowDetailsPage language={language} />} />
-              <Route path="/category/:type/:category" element={<CategoryPage language={language} />} />
-              <Route path="/wishlist" element={<WishlistPage language={language} />} />
-              <Route path="/search/:query" element={<SearchResultsPage language={language} />} />
-              <Route path="*" element={<NotFoundPage language={language} />} />
-            </Routes>
-          </Suspense>
-        </div>
-        <Footer language={language} />
-      </div>
-    </BrowserRouter>
-  );
+	return (
+		<BrowserRouter>
+			<div className="d-flex flex-column min-vh-100">
+				<Navbar
+					toggleTheme={toggleTheme}
+					currentTheme={theme}
+					language={language}
+					setLanguage={setLanguage}
+				/>
+				<div className="container flex-grow-1 my-5 mx-auto">
+					<Suspense fallback={<div>Loading...</div>}>
+						<Routes>
+							<Route path="/" element={<HomePage language={language} />} />
+							<Route path="/movies" element={<Movies language={language} />} />
+							<Route
+								path="/login"
+								element={<LoginPage language={language} />}
+							/>
+							<Route
+								path="/movie/:id"
+								element={<MovieDetailsPage language={language} />}
+							/>
+							<Route path="/tv" element={<TvShowsPage language={language} />} />
+							<Route
+								path="/tv/:id"
+								element={<TvShowDetailsPage language={language} />}
+							/>
+							<Route
+								path="/category/:type/:category"
+								element={<CategoryPage language={language} />}
+							/>
+							<Route
+								path="/wishlist"
+								element={<WishlistPage language={language} />}
+							/>
+							<Route
+								path="/search/:query"
+								element={<SearchResultsPage language={language} />}
+							/>
+							<Route path="*" element={<NotFoundPage language={language} />} />
+						</Routes>
+					</Suspense>
+				</div>
+				<Footer language={language} />
+			</div>
+		</BrowserRouter>
+	);
 }
 
 export default App;
