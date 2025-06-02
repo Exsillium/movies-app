@@ -24,16 +24,16 @@ function App() {
 	useEffect(() => {
 		const savedTheme = localStorage.getItem("theme") || "light";
 		setTheme(savedTheme);
-		document.documentElement.classList.remove("theme-light", "theme-dark");
-		document.documentElement.classList.add(`theme-${savedTheme}`);
+		document.body.classList.remove("theme-light", "theme-dark");
+		document.body.classList.add(`theme-${savedTheme}`);
 	}, []);
 
 	const toggleTheme = () => {
 		const newTheme = theme === "light" ? "dark" : "light";
 		setTheme(newTheme);
 		localStorage.setItem("theme", newTheme);
-		document.documentElement.classList.remove("theme-light", "theme-dark");
-		document.documentElement.classList.add(`theme-${newTheme}`);
+		document.body.classList.remove("theme-light", "theme-dark");
+		document.body.classList.add(`theme-${newTheme}`);
 	};
 
 	return (
