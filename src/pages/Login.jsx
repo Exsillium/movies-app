@@ -1,12 +1,13 @@
 import { Spinner, Container, Card } from "react-bootstrap";
 import { FaFilm } from "react-icons/fa";
-import translations from "../translations";
 import useAuthentication from "../hooks/useAuthentiction";
 import LoginButton from "../components/account/loginButton";
 import SpinnerLoader from "../components/loaders/spinnerLoader";
+import { useLanguage } from "../LanguageContext";
 
-export default function LoginPage({language}) {
-	const t = translations[language] || translations.en;
+
+export default function LoginPage() {
+	const { t } = useLanguage();
 	const { isLoading } = useAuthentication();
 
 	return (
@@ -27,7 +28,7 @@ export default function LoginPage({language}) {
 					width: "90%",
 					transform: "translateY(10vh)",
 				}}
-				className=" border-0"
+				className="login-card border-0"
 			>
 				<Card.Body className="p-md-5 p-4">
 					<div className="text-center mb-4">

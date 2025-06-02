@@ -97,7 +97,8 @@ export default function WishlistPage() {
     return (
       <div className="text-center my-5">
         <FaHeartBroken size={50} className="text-muted mb-3" />
-        <h5>{t.emptyWatchlist}</h5>
+        <h5>{t.emptywatchlist}</h5>
+        <h6 className="text-muted">{t.addtowatchlist}</h6>
         <Link to="/" className="btn btn-primary mt-3">
           {t.goBackHome}
         </Link>
@@ -111,7 +112,11 @@ export default function WishlistPage() {
       <div className="row row-cols-1 row-cols-md-2 g-4">
         {wishItems.map((item) => (
           <div key={`${item.id}-${getMediaType(item)}`} className="col">
-            <MovieCard movie={item} onRemove={handleRemove} language={language} />
+            <MovieCard
+              movie={item}
+              onRemove={handleRemove}
+              language={language}
+            />
           </div>
         ))}
       </div>

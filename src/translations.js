@@ -66,6 +66,7 @@ const translations = {
     dark: "Dark",
     country: "Country",
     watchnow: "Watch Now",
+    goBackHome: "Go Back Home",
   },
   ar: {
     home: "الصفحة الرئيسية",
@@ -134,6 +135,7 @@ const translations = {
     dark: "داكن",
     country: "الدولة",
     watchnow: "مشاهدة الان",
+    goBackHome: "العودة إلى الصفحة الرئيسية",
   },
   fr: {
     home: "Accueil",
@@ -202,6 +204,7 @@ const translations = {
     dark: "Sombre",
     country: "Pays",
     watchnow: "Regarder maintenant",
+    goBackHome: "Retour à l'accueil",
   },
   zh: {
     home: "首页",
@@ -270,6 +273,7 @@ const translations = {
     dark: "深色",
     country: "国家",
     watchnow: "立即观看",
+    goBackHome: "返回首页",
   },
 };
 
