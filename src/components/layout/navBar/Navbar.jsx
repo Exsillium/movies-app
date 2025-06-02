@@ -54,19 +54,21 @@ export default function Navbar({ currentTheme, toggleTheme }) {
 					</Nav>
 					<SearchInput language={language} />
 
-					<Nav className="px-4 px-lg-0">
-						<select
-							style={{ maxWidth: "100px" }}
-							className="language-select  my-2"
-							value={language}
-							onChange={handleLanguageChange}
-						>
-							<option value="en">EN</option>
-							<option value="fr">FR</option>
-							<option value="ar">AR</option>
-							<option value="zh">ZH</option>
-						</select>
-					</Nav>
+					{
+						<Nav className="px-4 px-lg-0">
+							<select
+								style={{ maxWidth: "100px" }}
+								className="language-select  my-2"
+								value={language}
+								onChange={handleLanguageChange}
+							>
+								<option value="en">EN</option>
+								<option value="fr">FR</option>
+								<option value="ar">AR</option>
+								<option value="zh">ZH</option>
+							</select>
+						</Nav>
+					}
 					<Nav className="px-4 px-lg-0">
 						<AccountDropdown
 							language={language}
