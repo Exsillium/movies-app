@@ -1,10 +1,10 @@
 import { Button, Spinner } from "react-bootstrap";
 import { FaSignInAlt } from "react-icons/fa";
 import useNewToken from "../../hooks/swr/useNewToken";
-import translations from "../../translations";
+import { useLanguage } from "../../LanguageContext";
 
-export default function LoginButton({language}) {
-	const t = translations[language] || translations.en;
+export default function LoginButton() {
+	const { t } = useLanguage();
 	const { token, isLoading: isTokenLoading } = useNewToken();
 
 	return (

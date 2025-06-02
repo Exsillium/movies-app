@@ -5,9 +5,11 @@ import { useRemoveFromWatchlist } from "../../hooks/watchlist/useRemoveFromWatch
 import { useIsInWatchlist } from "../../hooks/watchlist/useIsInWatchlist";
 import { useSelector } from "react-redux";
 import translations from "../../translations";
+import useTranslatedDetails from "../../hooks/useTranslatedDetails ";
 
 export default function MovieCard({ movie, onRemove, language }) {
-    const t = translations[language] || translations.en;
+  const t = translations[language] || translations.en;
+
   function getMediaType(details) {
     if (details.first_air_date || details.name) return "tv";
     if (details.release_date || details.title) return "movie";
@@ -16,7 +18,7 @@ export default function MovieCard({ movie, onRemove, language }) {
 
   const mediaType = getMediaType(movie);
   const linkTo = `/${mediaType}/${movie.id}`;
-  
+
   const sessionId = useSelector((state) => state.sessionId);
   const accountData = useSelector((state) => state.accountData);
 
@@ -24,19 +26,20 @@ export default function MovieCard({ movie, onRemove, language }) {
     movie.id,
     accountData?.id,
     sessionId,
-    getMediaType(movie)
+    mediaType
   );
 
-  const { add } = useAddToWatchlist(
-    accountData?.id,
-    sessionId,
-    getMediaType(movie)
-  );
-  
+  const { add } = useAddToWatchlist(accountData?.id, sessionId, mediaType);
   const { remove } = useRemoveFromWatchlist(
     accountData?.id,
     sessionId,
-    getMediaType(movie)
+    mediaType
+  );
+
+  const { translated, loading: loadingTranslation } = useTranslatedDetails(
+    mediaType,
+    movie.id,
+    language
   );
 
   const handleWishlistToggle = () => {
@@ -47,12 +50,24 @@ export default function MovieCard({ movie, onRemove, language }) {
       add(movie.id);
     }
   };
-  
+
   const handleRemoveFromWishlist = () => {
     if (onRemove) {
-      onRemove(movie.id, getMediaType(movie));
+      onRemove(movie.id, mediaType);
     }
   };
+
+  // Use translated fields if available, else fallback to original movie data
+  const title =
+    translated?.title ||
+    (mediaType === "tv" ? movie.name : movie.title) ||
+    t.noTitle;
+  const overview = translated?.overview || movie.overview || t.noDescription;
+  const releaseDate =
+    translated?.release_date ||
+    (mediaType === "tv" ? movie.first_air_date : movie.release_date) ||
+    t.noReleaseDate;
+
   const posterUrl = movie.poster_path
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
     : "https://via.placeholder.com/500x750?text=No+Image";
@@ -65,20 +80,21 @@ export default function MovieCard({ movie, onRemove, language }) {
             <img
               src={posterUrl}
               className="img-fluid rounded-start"
-              alt={movie.title}
+              alt={title}
             />
           </Link>
         </div>
         <div className="col-md-8 p-3 d-flex flex-column justify-content-between">
           <div>
             <div className="d-flex justify-content-between align-items-start">
-              <h5 className="fw-bold">{movie.title}</h5>
+              <h5 className="fw-bold">{title}</h5>
 
               {onRemove ? (
                 <FaHeart
                   onClick={handleRemoveFromWishlist}
                   size={20}
                   style={{ color: "#f1c40f", cursor: "pointer" }}
+                  title={t.removeFromWatchlist}
                 />
               ) : sessionId && accountData ? (
                 <button
@@ -88,7 +104,12 @@ export default function MovieCard({ movie, onRemove, language }) {
                     verticalAlign: "middle",
                     textDecoration: "none",
                     boxShadow: "none",
+                    cursor: "pointer",
                   }}
+                  aria-label={
+                    inWatchlist ? t.removeFromWatchlist : t.addToWatchlist
+                  }
+                  title={inWatchlist ? t.removeFromWatchlist : t.addToWatchlist}
                 >
                   {loadingWatchlist ? (
                     <span className="spinner-border spinner-border-sm text-secondary" />
@@ -101,20 +122,18 @@ export default function MovieCard({ movie, onRemove, language }) {
               ) : null}
             </div>
             <p className="text-muted mb-1" style={{ fontSize: "0.85rem" }}>
-              {movie.release_date}
+              {releaseDate}
             </p>
             <div className="mb-2">
               {[...Array(5)].map((_, i) => (
                 <span key={i}>{movie.vote_average / 2 > i ? "⭐" : "☆"}</span>
               ))}
-              <span className="ms-2">({movie.vote_count})</span>
+              <span className="ms-2">({movie.vote_count || 0})</span>
             </div>
             <p className="card-text" style={{ fontSize: "0.9rem" }}>
-              {movie.overview
-                ? movie.overview.length > 150
-                  ? movie.overview.slice(0, 150) + "..."
-                  : movie.overview
-                : "No description available."}
+              {overview.length > 150
+                ? overview.slice(0, 150) + "..."
+                : overview}
             </p>
           </div>
           <div className="d-flex justify-content-end">

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import TvShowCard from "./TvShowCard";
 
-
 export default function ShowsSlider({ shows, title, type, language }) {
 	const [showLeftButton, setShowLeftButton] = useState(false);
 	const [showRightButton, setShowRightButton] = useState(true);
