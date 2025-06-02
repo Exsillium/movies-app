@@ -4,13 +4,13 @@ import SpinnerLoader from "../loaders/spinnerLoader";
 import translations from "../../translations";
 import useSlidrIntervalCounter from "../../hooks/useSliderIntervalCounter";
 
-export default function HeroSlider({language}) {
+export default function HeroSlider({ language }) {
 	const t = translations[language] || translations.en;
-	const { popMovies, isLoading, error } = usePopularMovies();
+	const { popMovies, isLoading, error } = usePopularMovies(8);
 	const imageBaseUrl = "https://image.tmdb.org/t/p/original";
 	const { currentIndex, setCurrentIndex } = useSlidrIntervalCounter(
 		popMovies?.length,
-		2000
+		5000
 	);
 
 	if (isLoading) return <SpinnerLoader />;
@@ -29,7 +29,7 @@ export default function HeroSlider({language}) {
 				}}
 			>
 				<div className="overlay"></div>
-				<div className="container">
+				<div className="container px-4 px-lg-5">
 					<div className="hero-content">
 						<h1 className="hero-title">{movie.title}</h1>
 						<div className="hero-meta">
@@ -39,7 +39,11 @@ export default function HeroSlider({language}) {
 								{new Date(movie.release_date).getFullYear()}
 							</span>
 						</div>
-						<p className="hero-overview">{movie.overview}</p>
+						{window.innerWidth > 768 && (
+							<p style={{ maxHeight: "500px" }} className="hero-overview">
+								{movie.overview}
+							</p>
+						)}
 						<div className="hero-actions">
 							<Link
 								to={`/movie/${movie.id}`}

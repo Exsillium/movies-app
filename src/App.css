@@ -33,7 +33,9 @@
 	position: relative;
 	color: white;
 	max-width: 600px;
-	padding-top: 150px;
+	padding-top: 100px;
+
+	height: 100%;
 }
 
 .hero-title {
