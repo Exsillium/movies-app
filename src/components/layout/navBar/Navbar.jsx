@@ -20,7 +20,6 @@ export default function Navbar({ currentTheme, toggleTheme }) {
 		document.body.setAttribute("dir", newLang === "ar" ? "rtl" : "ltr");
 	}
 
-<<<<<<< HEAD
   return (
     <BsNavbar
       expand="lg"
@@ -53,41 +52,6 @@ export default function Navbar({ currentTheme, toggleTheme }) {
               </Nav.Link>
             )}
           </Nav>
-=======
-	return (
-		<BsNavbar
-			expand="lg"
-			sticky="top"
-			className="shadow-sm"
-			style={{
-				background: "rgba(254, 198, 31, 0.95)",
-				backdropFilter: "blur(10px)",
-			}}
-		>
-			<Container className="px-2">
-				<BsNavbar.Brand as={NavLink} to="/" className="m-0 fw-bold fs-4">
-					🎬 Movies App
-				</BsNavbar.Brand>
-				<BsNavbar.Toggle aria-controls="basic-navbar-nav" />
-				<BsNavbar.Collapse id="basic-navbar-nav">
-					<Nav className="me-auto  px-lg-0 px-4">
-						<Nav.Link as={NavLink} to="/" className="fw-semibold">
-							{t.home}
-						</Nav.Link>
-						<Nav.Link as={NavLink} to="/movies" className="fw-semibold">
-							{t.movies}
-						</Nav.Link>
-						<Nav.Link as={NavLink} to="/tv" className="fw-semibold">
-							{t.tvShows}
-						</Nav.Link>
-						{sessionId && (
-							<Nav.Link as={NavLink} to="/wishlist" className="fw-semibold">
-								{t.wishlist}
-							</Nav.Link>
-						)}
-					</Nav>
-					<SearchInput language={language} />
->>>>>>> 6620400c917f7e20fe042003e5ac240b8dbd97d4
 
 					<Nav className="px-4 px-lg-0">
 						<select
