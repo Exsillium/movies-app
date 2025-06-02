@@ -8,7 +8,8 @@ import CastList from "../components/details/CastList";
 import AirDatesAndProduction from "../components/details/AirDatesAndProduction";
 import "../styles/Media.css";
 
-export default function TvShowDetailsPage() {
+
+export default function TvShowDetailsPage({language}) {
   const { id } = useParams();
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -66,11 +67,12 @@ export default function TvShowDetailsPage() {
       <div className="container py-5 HeroSection">
         <div className="row">
           <div className="col-lg-8">
-            <ShowInfo details={details} />
-            <CastList cast={details.credits.cast} imageBaseUrl={imageBaseUrl} />
+            <ShowInfo language={language} details={details} />
+            <CastList language={language} cast={details.credits.cast} imageBaseUrl={imageBaseUrl} />
           </div>
           <div className="col-lg-4">
             <AirDatesAndProduction
+              language={language}
               details={details}
               imageBaseUrl={imageBaseUrl}
             />

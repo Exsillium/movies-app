@@ -1,11 +1,12 @@
 import { Spinner, Container, Card } from "react-bootstrap";
 import { FaFilm } from "react-icons/fa";
-
+import translations from "../translations";
 import useAuthentication from "../hooks/useAuthentiction";
 import LoginButton from "../components/account/loginButton";
 import SpinnerLoader from "../components/loaders/spinnerLoader";
 
-export default function LoginPage() {
+export default function LoginPage({language}) {
+	const t = translations[language] || translations.en;
 	const { isLoading } = useAuthentication();
 
 	return (
@@ -32,11 +33,10 @@ export default function LoginPage() {
 					<div className="text-center mb-4">
 						<FaFilm size={48} style={{ color: "#FEC61F" }} className="mb-3" />
 						<h1 className="login-title  fw-semibold mb-2 fs-2 text-uppcase text-dark">
-							Welcome to Movie App
+							{t.welcome}
 						</h1>
 						<p className="text-muted">
-							Sign in with your TMDB account to access your personalized movie
-							experience
+							{t.signin}
 						</p>
 					</div>
 

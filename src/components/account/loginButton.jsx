@@ -1,8 +1,10 @@
 import { Button, Spinner } from "react-bootstrap";
 import { FaSignInAlt } from "react-icons/fa";
 import useNewToken from "../../hooks/swr/useNewToken";
+import translations from "../../translations";
 
-export default function LoginButton() {
+export default function LoginButton({language}) {
+	const t = translations[language] || translations.en;
 	const { token, isLoading: isTokenLoading } = useNewToken();
 
 	return (
@@ -23,12 +25,12 @@ export default function LoginButton() {
 						aria-hidden="true"
 						className="me-2"
 					/>
-					<span>Connecting to TMDB...</span>
+					<span>{t.connecting}</span>
 				</>
 			) : (
 				<>
 					<FaSignInAlt className="me-2" />
-					<span>Continue with TMDB</span>
+					<span>{t.continue}</span>
 				</>
 			)}
 		</Button>

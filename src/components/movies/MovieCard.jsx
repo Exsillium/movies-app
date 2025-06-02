@@ -4,8 +4,10 @@ import { useAddToWatchlist } from "../../hooks/watchlist/useAddToWatchlist";
 import { useRemoveFromWatchlist } from "../../hooks/watchlist/useRemoveFromWatchlist";
 import { useIsInWatchlist } from "../../hooks/watchlist/useIsInWatchlist";
 import { useSelector } from "react-redux";
+import translations from "../../translations";
 
-export default function MovieCard({ movie, onRemove }) {
+export default function MovieCard({ movie, onRemove, language }) {
+    const t = translations[language] || translations.en;
   function getMediaType(details) {
     if (details.first_air_date || details.name) return "tv";
     if (details.release_date || details.title) return "movie";
@@ -117,7 +119,7 @@ export default function MovieCard({ movie, onRemove }) {
           </div>
           <div className="d-flex justify-content-end">
             <Link to={linkTo} className="btn btn-sm btn-outline-primary me-2">
-              View Details
+              {t.view}
             </Link>
           </div>
         </div>

@@ -1,21 +1,24 @@
 import React from 'react';
+import translations from '../../translations';
 
-export default function AirDatesAndProduction({ details, imageBaseUrl }) {
+export default function AirDatesAndProduction({ details, imageBaseUrl, language }) {
+    const t = translations[language] || translations.en;
+
   return (
     <>
       <div className="info-card mb-4">
         <div className="info-card-header">
           <i className="fas fa-calendar info-icon"></i>
-          <h4>Air Dates</h4>
+          <h4>{t.air}</h4>
         </div>
         <div className="info-card-body">
           <div className="info-item">
-            <span className="info-label">First Air Date</span>
+            <span className="info-label">{t.first}</span>
             <span className="info-value">{new Date(details.first_air_date).toLocaleDateString()}</span>
           </div>
           {details.last_air_date && (
             <div className="info-item">
-              <span className="info-label">Last Air Date</span>
+              <span className="info-label">{t.last}</span>
               <span className="info-value">{new Date(details.last_air_date).toLocaleDateString()}</span>
             </div>
           )}
@@ -26,7 +29,7 @@ export default function AirDatesAndProduction({ details, imageBaseUrl }) {
         <div className="info-card">
           <div className="info-card-header">
             <i className="fas fa-building info-icon"></i>
-            <h4>Production Companies</h4>
+            <h4>{t.prod}</h4>
           </div>
           <div className="info-card-body">
             <div className="production-companies">

@@ -1,4 +1,4 @@
-import  { useState , useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import TvShowModal from "../MediaModal";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
@@ -6,8 +6,10 @@ import { useAddToWatchlist } from "../../hooks/watchlist/useAddToWatchlist";
 import { useRemoveFromWatchlist } from "../../hooks/watchlist/useRemoveFromWatchlist";
 import { useIsInWatchlist } from "../../hooks/watchlist/useIsInWatchlist";
 import { useSelector } from "react-redux";
+import translations from "../../translations";
 
-export default function TvShowCard({ show, type }) {
+export default function TvShowCard({ show, type , language }) {
+  const t = translations[language] || translations.en;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
   const isTv = type === "tv";
@@ -27,30 +29,27 @@ export default function TvShowCard({ show, type }) {
     sessionId,
     isTv ? "tv" : "movie"
   );
-  
+
   const { remove } = useRemoveFromWatchlist(
     accountData?.id,
     sessionId,
     isTv ? "tv" : "movie"
   );
 
-
   const [optimisticWatchlist, setOptimisticWatchlist] = useState(inWatchlist);
-  
-  
-      useEffect(() => {
-          setOptimisticWatchlist(inWatchlist);
-      }, [inWatchlist]);
-  
+
+  useEffect(() => {
+    setOptimisticWatchlist(inWatchlist);
+  }, [inWatchlist]);
 
   const handleWishlistToggle = () => {
     if (!accountData) return;
-     setOptimisticWatchlist((prev) => !prev);
-        if (optimisticWatchlist) {
-            remove(show.id);
-        } else {
-            add(show.id);
-        }
+    setOptimisticWatchlist((prev) => !prev);
+    if (optimisticWatchlist) {
+      remove(show.id);
+    } else {
+      add(show.id);
+    }
   };
 
   let detailsLink = isTv ? `/tv/${show.id}` : `/movie/${show.id}`;
@@ -77,7 +76,7 @@ export default function TvShowCard({ show, type }) {
           <p className="tv-card-overview">{show.overview}</p>
           <div className="d-flex justify-content-between align-items-center">
             <Link to={detailsLink} className="tv-card-link">
-              View Details
+              {t.view}
             </Link>
             {sessionId && accountData ? (
               <button
@@ -103,6 +102,7 @@ export default function TvShowCard({ show, type }) {
       </div>
 
       <TvShowModal
+        language={language}
         show={show}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

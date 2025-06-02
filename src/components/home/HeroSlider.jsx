@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import usePopularMovies from "../../hooks/swr/movies/usePopularMovies";
 import SpinnerLoader from "../loaders/spinnerLoader";
+import translations from "../../translations";
 import useSlidrIntervalCounter from "../../hooks/useSliderIntervalCounter";
 
-export default function HeroSlider() {
+export default function HeroSlider({language}) {
+	const t = translations[language] || translations.en;
 	const { popMovies, isLoading, error } = usePopularMovies();
 	const imageBaseUrl = "https://image.tmdb.org/t/p/original";
 	const { currentIndex, setCurrentIndex } = useSlidrIntervalCounter(
@@ -42,9 +44,10 @@ export default function HeroSlider() {
 							<Link
 								to={`/movie/${movie.id}`}
 								className="btn btn-primary btn-lg"
+								dir="ltr"
 							>
 								<i className="fas fa-play me-2"></i>
-								Watch Now
+								{t.watchnow}
 							</Link>
 						</div>
 					</div>

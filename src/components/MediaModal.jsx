@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { tmdbApi } from "../apis/config";
+import translations from "../translations";
 
-export default function TvShowModal({ show, isOpen, onClose, type }) {
+export default function TvShowModal({ show, isOpen, onClose, type , language }) {
+  const t = translations[language] || translations.en;
   const navigate = useNavigate();
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -69,7 +71,7 @@ export default function TvShowModal({ show, isOpen, onClose, type }) {
                 </div>
               ) : error ? (
                 <div className="error-message">
-                  Error loading show details: {error.message}
+                  {t.err} {error.message}
                 </div>
               ) : (
                 details && (
@@ -82,22 +84,22 @@ export default function TvShowModal({ show, isOpen, onClose, type }) {
                       />
                       <div className="mt-3">
                         <p className="mb-1">
-                          <strong>Rating:</strong> ⭐{" "}
+                          <strong>{t.rating}</strong> ⭐{" "}
                           {details.vote_average.toFixed(1)} (
-                          {details.vote_count} votes)
+                          {details.vote_count} {t.votes})
                         </p>
                         <p className="mb-1">
-                          <strong>Status:</strong> {details.status}
+                          <strong>{t.status}:</strong> {details.status}
                         </p>
                         <p className="mb-1">
-                          <strong>First Air:</strong>{" "}
+                          <strong>{t.first}:</strong>{" "}
                           {new Date(
                             details.first_air_date
                           ).toLocaleDateString()}
                         </p>
                         {details.last_air_date && (
                           <p className="mb-1">
-                            <strong>Last Air:</strong>{" "}
+                            <strong>{t.last}:</strong>{" "}
                             {new Date(
                               details.last_air_date
                             ).toLocaleDateString()}
@@ -106,33 +108,33 @@ export default function TvShowModal({ show, isOpen, onClose, type }) {
                       </div>
                     </div>
                     <div className="col-md-8">
-                      <h6 className="fw-bold mb-3">Overview</h6>
+                      <h6 className="fw-bold mb-3">{t.overview}</h6>
                       <p>{details.overview}</p>
 
-                      <h6 className="fw-bold mb-3 mt-4">Details</h6>
+                      <h6 className="fw-bold mb-3 mt-4">{t.details}</h6>
                       <div className="row">
                         <div className="col-sm-6">
                           <p className="mb-1">
-                            <strong>Seasons:</strong>{" "}
+                            <strong>{t.seasons}:</strong>{" "}
                             {details.number_of_seasons}
                           </p>
                           <p className="mb-1">
-                            <strong>Episodes:</strong>{" "}
+                            <strong>{t.episodes}:</strong>{" "}
                             {details.number_of_episodes}
                           </p>
                         </div>
                         <div className="col-sm-6">
                           <p className="mb-1">
-                            <strong>Original Language:</strong>{" "}
+                            <strong>{t.origin}:</strong>{" "}
                             {details.original_language.toUpperCase()}
                           </p>
                           <p className="mb-1">
-                            <strong>Type:</strong> {details.type}
+                            <strong>{t.type}</strong> {details.type}
                           </p>
                         </div>
                       </div>
 
-                      <h6 className="fw-bold mb-3 mt-4">Genres</h6>
+                      <h6 className="fw-bold mb-3 mt-4">{t.generes}:</h6>
                       <div className="mb-4">
                         {details.genres.map((genre) => (
                           <span
@@ -146,7 +148,7 @@ export default function TvShowModal({ show, isOpen, onClose, type }) {
 
                       {details.production_companies.length > 0 && (
                         <>
-                          <h6 className="fw-bold mb-3">Production Companies</h6>
+                          <h6 className="fw-bold mb-3">{t.production}:</h6>
                           <div>
                             {details.production_companies.map((company) => (
                               <span
@@ -170,7 +172,7 @@ export default function TvShowModal({ show, isOpen, onClose, type }) {
                             );
                           }}
                         >
-                          View More Details
+                          {t.view}
                         </button>
                       </div>
                     </div>

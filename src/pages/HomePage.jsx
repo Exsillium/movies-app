@@ -6,78 +6,84 @@ import useTrendingMovies from "../hooks/swr/movies/useTrendingMovies";
 import useTrendingTv from "../hooks/swr/tv/useTrendingTv";
 import useUpcomingMovies from "../hooks/swr/movies/useUpcomingMovies";
 import SectionTitle from "../components/layout/section/SectionTitle";
+import translations from "../translations";
 
-export default function HomePage() {
-	const accountData = useSelector((state) => state.accountData);
-	// Fetch trending movies and shows
-	const { trendingMovies } = useTrendingMovies();
+export default function HomePage({language}) {
+  // Get the current language from translations
+  const t = translations[language] || translations.en;
 
-	const { trendingTv } = useTrendingTv();
-	const { upcomingMovies } = useUpcomingMovies();
+  const accountData = useSelector((state) => state.accountData);
+  // Fetch trending movies and shows
+  const { trendingMovies } = useTrendingMovies();
+  const { trendingTv } = useTrendingTv();
+  const { upcomingMovies } = useUpcomingMovies();
 
-	return (
-		<div className="home-page">
-			{/* Hero Section */}
-			<HeroSlider />
+  return (
+    <div className="home-page">
+      {/* Hero Section */}
+      <HeroSlider language={language} />
 
-			<div className="container-xl py-5">
-				{/* Welcome Message for logged-in users */}
-				{accountData && (
-					<div className="welcome-section text-center mb-5">
-						<h2 className="welcome-title">
-							Welcome back, {accountData.username}! 👋
-						</h2>
-						<p className="text-muted">
-							Discover the latest and greatest in movies and TV shows
-						</p>
-					</div>
-				)}
+      <div className="container-xl py-5">
+        {/* Welcome Message for logged-in users */}
+        {accountData && (
+          <div className="welcome-section text-center mb-5">
+            <h2 className="welcome-title">
+              {t.welcomeBack} {accountData.username}! 👋
+            </h2>
+            <p className="text-muted">
+              {t.discover}
+            </p>
+          </div>
+        )}
 
-				{/* Trending Movies Section */}
-				{trendingMovies && (
-					<div className="mb-5">
-						<SectionTitle
-							href={"/category/movie/trending"}
-							title="Trending Movies"
-						/>
-						<ShowsSlider
-							shows={trendingMovies}
-							title="Trending Movies"
-							type="movie"
-						/>
-					</div>
-				)}
+        {/* Trending Movies Section */}
+        {trendingMovies && (
+          <div className="mb-5">
+            <SectionTitle
+              href={"/category/movie/trending"}
+              title={t.trendingMovies}
+            />
+            <ShowsSlider
+              language={language}
+              shows={trendingMovies}
+              title="Trending Movies"
+              type="movie"
+            />
+          </div>
+        )}
 
-				{/* Trending TV Shows Section */}
-				{trendingTv && (
-					<div className="mb-5">
-						<SectionTitle
-							href={"/category/tv/trending"}
-							title="Trending TV Shows"
-						/>
-						<ShowsSlider
-							shows={trendingTv}
-							title="Trending TV Shows"
-							type="tv"
-						/>
-					</div>
-				)}
+        {/* Trending TV Shows Section */}
+        {trendingTv && (
+          <div className="mb-5">
+            <SectionTitle
+              href={"/category/tv/trending"}
+              title={t.trendingTV}
+            />
+            <ShowsSlider
+              language={language}
+              shows={trendingTv}
+              title="Trending TV Shows"
+              type="tv"
+            />
+          </div>
+        )}
 
-				{/* Upcoming Movies Section */}
-				{upcomingMovies && (
-					<div className="mb-5">
-						<SectionTitle
-							href={"/category/movie/upcoming"}
-							title="Coming Soon"
-						/>
-						<ShowsSlider
-							shows={upcomingMovies}
-							title="Coming Soon"
-							type="movie"
-						/>
-					</div>
-				)}
-			</div>
-		</div>
-	);
+        {/* Upcoming Movies Section */}
+        {upcomingMovies && (
+          <div className="mb-5">
+            <SectionTitle
+              href={"/category/movie/upcoming"}
+              title={t.comingSoon}
+            />
+            <ShowsSlider
+              language={language}
+              shows={upcomingMovies}
+              title="Coming Soon"
+              type="movie"
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }

@@ -2,32 +2,53 @@ import { Form, InputGroup } from "react-bootstrap";
 import { MdSearch } from "react-icons/md";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-export default function SearchInput() {
+import translations from "../../../translations";
+
+export default function SearchInput({ language }) {
+  const t = translations[language] || translations.en;
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
-  // const dispatch = useDispatch(); // Not needed if LogoutButton handles its own dispatch
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/search/${encodeURIComponent(searchQuery)}`);
     }
-    console.log("Searching for:", searchQuery);
   };
+
+  const isRtl = language === "ar";
+
   return (
-    <Form className="d-flex mx-auto" onSubmit={handleSearch}>
-      <InputGroup>
+    <Form
+      className="d-flex mx-auto"
+      onSubmit={handleSearch}
+      dir={isRtl ? "rtl" : "ltr"}
+    >
+      <InputGroup
+        style={{
+          maxWidth: "300px",
+          width: "100%",
+        }}
+      >
         <Form.Control
           type="search"
-          placeholder="Search movies & TV shows..."
+          placeholder={t.search}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="border-0 shadow-sm"
-          style={{ maxWidth: "300px" }}
+          dir={isRtl ? "rtl" : "ltr"}
+          style={{
+            textAlign: isRtl ? "right" : "left",
+            order: isRtl ? 2 : 1,
+          }}
         />
         <InputGroup.Text
           className="border-0 cursor-pointer"
           onClick={handleSearch}
+          style={{
+            order: isRtl ? 1 : 2,
+            color: "inherit",
+          }}
         >
           <MdSearch size={20} />
         </InputGroup.Text>

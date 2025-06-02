@@ -4,10 +4,13 @@ import "../styles/Media.css";
 import ShowsSlider from "../components/tvshows/ShowsSlider";
 import { tmdbApi } from "../apis/config";
 import SectionTitle from "../components/layout/section/SectionTitle";
+import translations from "../translations";
 
 const fetcher = (url) => tmdbApi.get(url).then((res) => res.data.results);
 
-export default function MoviesPage() {
+export default function MoviesPage({ language }) {
+	// Get the current language from translations
+	const t = translations[language] || translations.en;
 	const { data: nowPlaying, error: nowPlayingError } = useSWR(
 		"/movie/now_playing",
 		fetcher
@@ -26,17 +29,17 @@ export default function MoviesPage() {
 
 	const categories = {
 		now_playing: {
-			title: "Now Playing",
+			title: t.now,
 			endpoint: "/movie/now_playing",
 			data: nowPlaying,
 		},
 		popular: {
-			title: "Popular Movies",
+			title: t.popular,
 			endpoint: "/movie/popular",
 			data: popularMovies,
 		},
 		top_rated: {
-			title: "Top Rated Movies",
+			title: t.topRated,
 			endpoint: "/movie/top_rated",
 			data: topRatedMovies,
 		},
@@ -71,7 +74,7 @@ export default function MoviesPage() {
 					title={category.title}
 					href={`/category/movie/${categoryKey}`}
 				/>
-				<ShowsSlider shows={category.data} title={category.title} type={type} />
+				<ShowsSlider language={language} shows={category.data} title={category.title} type={type} />
 			</div>
 		);
 	};
@@ -79,7 +82,7 @@ export default function MoviesPage() {
 	return (
 		<div className="tv-shows-container">
 			<div className="container-xl py-4">
-				<h1 className="page-title mb-5">Movies Hub</h1>
+				<h1 className="page-title mb-5">{t.moviesHub}</h1>
 				{Object.keys(categories).map((categoryKey) =>
 					renderCategory(categoryKey)
 				)}

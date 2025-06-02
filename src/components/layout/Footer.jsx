@@ -2,8 +2,10 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { FaFacebook, FaTwitter, FaInstagram, FaGithub } from "react-icons/fa";
 import { Link } from "react-router";
+import translations from "../../translations";
 
-export default function Footer() {
+export default function Footer({language}) {
+	const t = translations[language] || translations.en;
 	return (
 		<footer
 			style={{ background: "linear-gradient(to bottom, #1a1a1a, #000000)" }}
@@ -14,12 +16,11 @@ export default function Footer() {
 					<Col md={4} className="text-center text-md-start">
 						<h5 className="mb-3">🎬 Movie App</h5>
 						<p className="mb-0 text-white-50">
-							Your ultimate destination for movies and TV shows. Discover,
-							track, and enjoy your favorite entertainment.
+							{t.tag}
 						</p>
 					</Col>
 					<Col md={4} className="text-center">
-						<h5 className="mb-3">Connect With Us</h5>
+						<h5 className="mb-3">{t.connect}</h5>
 						<div className="social-links">
 							<a href="#" className="text-light me-3" aria-label="Facebook">
 								<FaFacebook size={24} />
@@ -36,14 +37,14 @@ export default function Footer() {
 						</div>
 					</Col>
 					<Col md={4} className="text-center text-md-end">
-						<h5 className="mb-3">Quick Links</h5>
+						<h5 className="mb-3">{t.links}</h5>
 						<ul className="list-unstyled">
 							<li>
 								<Link
 									to="/movies"
 									className="text-white-50 text-decoration-none hover-effect"
 								>
-									Movies
+									{t.movies}
 								</Link>
 							</li>
 							<li>
@@ -51,7 +52,7 @@ export default function Footer() {
 									to="/tv"
 									className="text-white-50 text-decoration-none hover-effect"
 								>
-									TV Shows
+									{t.tvShows}
 								</Link>
 							</li>
 							<li>
@@ -59,7 +60,7 @@ export default function Footer() {
 									to="/wishlist"
 									className="text-white-50 text-decoration-none hover-effect"
 								>
-									Wishlist
+									{t.wishlist}
 								</Link>
 							</li>
 						</ul>
@@ -68,7 +69,7 @@ export default function Footer() {
 				<hr className="my-4 border-secondary" />
 				<div className="text-center text-white-50">
 					<p className="mb-0">
-						&copy; {new Date().getFullYear()} MovieVerse. All Rights Reserved.
+						&copy; {new Date().getFullYear()} {t.rights} 🎥
 					</p>
 				</div>
 			</Container>

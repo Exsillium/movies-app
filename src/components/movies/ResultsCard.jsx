@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import TvShowModal from "../MediaModal";
+import translations from "../../translations";
 
-export default function ResultsCard({ movie }) {
+export default function ResultsCard({ movie, language }) {
+  const t = translations[language] || translations.en;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
   const isTv = movie.media_type === "tv";
@@ -33,7 +35,7 @@ export default function ResultsCard({ movie }) {
           <h5 className="tv-card-title">{title}</h5>
           <p className="tv-card-overview">{overview}</p>
           <Link to={detailsLink} className="tv-card-link">
-            View Details
+            {t.view}
           </Link>
         </div>
       </div>

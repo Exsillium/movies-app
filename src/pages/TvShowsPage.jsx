@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import "../styles/Media.css";
 import ShowsSlider from "../components/tvshows/ShowsSlider";
 import { tmdbApi } from "../apis/config";
+import translations from "../translations";
 
-export default function TvShowsPage() {
+export default function TvShowsPage({ language }) {
+  const t = translations[language] || translations.en;
   const [popularTV, setPopularTV] = useState([]);
   const [topRatedTV, setTopRatedTV] = useState([]);
   const [airingTV, setAiringTV] = useState([]);
@@ -13,19 +15,19 @@ export default function TvShowsPage() {
 
   const categories = {
     popular: {
-      title: "Popular Shows",
+      title: t.popularTv,
       endpoint: "/tv/popular",
       data: popularTV,
       setData: setPopularTV,
     },
     topRated: {
-      title: "Top Rated Shows",
+      title: t.topRatedTv,
       endpoint: "/tv/top_rated",
       data: topRatedTV,
       setData: setTopRatedTV,
     },
     airing: {
-      title: "Currently Airing",
+      title: t.airing,
       endpoint: "/tv/on_the_air",
       data: airingTV,
       setData: setAiringTV,
@@ -85,11 +87,11 @@ export default function TvShowsPage() {
             className="category-header d-flex align-items-center text-decoration-none flex-grow-1"
           >
             <h2 className="section-title mb-0">{category.title}</h2>
-            <button className="btn btn-link ms-3">View All</button>
+            <button className="btn btn-link ms-3">{t.viewAll}</button>
           </Link>
         </div>
 
-        <ShowsSlider shows={category.data} title={category.title} type={type} />
+        <ShowsSlider language={language} shows={category.data} title={category.title} type={type} />
       </div>
     );
   };
@@ -97,7 +99,7 @@ export default function TvShowsPage() {
   return (
     <div className="tv-shows-container">
       <div className="container-xl py-4">
-        <h1 className="page-title mb-5">TV Shows Hub</h1>
+        <h1 className="page-title mb-5">{t.tvshowsHub}</h1>
         {Object.keys(categories).map((categoryKey) =>
           renderCategory(categoryKey)
         )}

@@ -3,8 +3,10 @@ import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import ResultsCard from "../components/movies/ResultsCard";
 import fetcher from "../swr/fetcher";
+import translations from "../translations";
 
-export default function SearchResultsPage() {
+export default function SearchResultsPage({language}) {
+  const t = translations[language] || translations.en;
   const { query } = useParams();
   const searchTerm = decodeURIComponent(query || "");
 
@@ -26,22 +28,22 @@ export default function SearchResultsPage() {
 
   return (
     <Container className="py-4">
-      <h2 className="mb-4">Search Results for: "{searchTerm}"</h2>
+      <h2 className="mb-4">{t.searchresults}: "{searchTerm}"</h2>
 
-      {error && <div>Error loading results: {error.message}</div>}
+      {error && <div>{t.errresults}: {error.message}</div>}
 
       {isLoading ? (
-        <div>Loading results...</div>
+        <div>{t.loadingresults}</div>
       ) : filteredResults?.length > 0 ? (
         <Row xs={1} md={2} lg={4} className="g-4">
           {filteredResults.map((movie) => (
             <Col key={`${movie.id}-${movie.media_type}`}>
-              <ResultsCard movie={movie} />
+              <ResultsCard language={language} movie={movie} />
             </Col>
           ))}
         </Row>
       ) : (
-        <div>No results found</div>
+        <div>{t.noresults}</div>
       )}
     </Container>
   );

@@ -1,11 +1,13 @@
 import React from 'react';
+import translations from '../../translations';
 
-export default function CastList({ cast, imageBaseUrl }) {
+export default function CastList({ cast, imageBaseUrl, language }) {
+  const t = translations[language] || translations.en;
   if (cast.length === 0) return null;
 
   return (
     <section className="cast-section mb-5">
-      <h3 className="section-title mb-4">Featured Cast</h3>
+      <h3 className="section-title mb-4">{t.cast}</h3>
       <div className="row g-4">
         {cast.slice(0, 6).map(person => (
           <div key={person.id} className="col-sm-6 col-md-4">

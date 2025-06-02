@@ -2,8 +2,10 @@ import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { removeSessionId } from "../../store/slice/sessionId";
 import { removeAccountData } from "../../store/slice/accountData";
+import translations from "../../translations";
 
-export default function LogoutButton() {
+export default function LogoutButton({language}) {
+	const t = translations[language] || translations.en;
 	const dispatch = useDispatch();
 
 	return (
@@ -14,7 +16,7 @@ export default function LogoutButton() {
 			}}
 			variant="danger"
 		>
-			Logout
+			{t.logout}
 		</Button>
 	);
 }
