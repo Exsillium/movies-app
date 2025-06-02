@@ -3,15 +3,15 @@ import { tmdbApi } from "../../apis/config";
 import ShowsSlider from "../tvshows/ShowsSlider";
 import "../../styles/Media.css";
 
-export default function RecommendedMovies(props) {
-  const movieId = props.movieId;
+export default function RecommendedMovies({ movieId, language }) {
   const [recommendedMovies, setRecommendedMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const type = "movie";
+
   const fetchRecommendedMovies = async () => {
     try {
-      const response = await tmdbApi.get(`/movie/${movieId}/recommendations`);
+      const response = await tmdbApi.get(`/movie/${movieId}/recommendations?language=${language}`);
       setRecommendedMovies(response.data.results);
       setLoading(false);
     } catch (error) {
@@ -22,10 +22,15 @@ export default function RecommendedMovies(props) {
   };
 
   useEffect(() => {
+    if (!movieId) {
+      setRecommendedMovies([]);
+      setLoading(false);
+      return;
+    }
     setLoading(true);
     setError(null);
     fetchRecommendedMovies();
-  }, [movieId]);
+  }, [movieId, language]);
 
   if (loading) {
     return (
@@ -36,6 +41,7 @@ export default function RecommendedMovies(props) {
       </div>
     );
   }
+
   if (error) {
     return (
       <div className="container py-5">
@@ -54,6 +60,7 @@ export default function RecommendedMovies(props) {
             shows={recommendedMovies}
             title="Recommended Movies"
             type={type}
+            language={language} 
           />
         </section>
       )}

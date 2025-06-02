@@ -7,10 +7,11 @@ import ShowInfo from "../components/details/ShowInfo";
 import CastList from "../components/details/CastList";
 import AirDatesAndProduction from "../components/details/AirDatesAndProduction";
 import "../styles/Media.css";
+import { useLanguage } from "../LanguageContext";
 
-
-export default function TvShowDetailsPage({language}) {
+export default function TvShowDetailsPage() {
   const { id } = useParams();
+  const { language, t } = useLanguage();
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,9 +24,9 @@ export default function TvShowDetailsPage({language}) {
       setError(null);
       try {
         const [showDetails, credits, similar] = await Promise.all([
-          tmdbApi.get(`/tv/${id}`),
-          tmdbApi.get(`/tv/${id}/credits`),
-          tmdbApi.get(`/tv/${id}/similar`),
+          tmdbApi.get(`/tv/${id}?language=${language}`),
+          tmdbApi.get(`/tv/${id}/credits?language=${language}`),
+          tmdbApi.get(`/tv/${id}/similar?language=${language}`),
         ]);
         setDetails({
           ...showDetails.data,
@@ -39,7 +40,7 @@ export default function TvShowDetailsPage({language}) {
       }
     };
     fetchDetails();
-  }, [id]);
+  }, [id, language]); // trigger re-fetch if language changes
 
   useEffect(() => {
     if (!loading && details) window.scrollTo({ top: 0, behavior: "smooth" });
@@ -68,7 +69,11 @@ export default function TvShowDetailsPage({language}) {
         <div className="row">
           <div className="col-lg-8">
             <ShowInfo language={language} details={details} />
-            <CastList language={language} cast={details.credits.cast} imageBaseUrl={imageBaseUrl} />
+            <CastList
+              language={language}
+              cast={details.credits.cast}
+              imageBaseUrl={imageBaseUrl}
+            />
           </div>
           <div className="col-lg-4">
             <AirDatesAndProduction
@@ -81,8 +86,9 @@ export default function TvShowDetailsPage({language}) {
         {details.similar.length > 0 && (
           <section className="mt-5">
             <ShowsSlider
+              language={language}
               shows={details.similar}
-              title="Similar Shows"
+              title={t.similar || "Similar Shows"}
               type={type}
             />
           </section>

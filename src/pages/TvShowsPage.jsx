@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import "../styles/Media.css";
 import ShowsSlider from "../components/tvshows/ShowsSlider";
 import { tmdbApi } from "../apis/config";
-import translations from "../translations";
+import { useLanguage } from "../LanguageContext";
 
-export default function TvShowsPage({ language }) {
-  const t = translations[language] || translations.en;
+export default function TvShowsPage() {
+  const { t, language } = useLanguage();
   const [popularTV, setPopularTV] = useState([]);
   const [topRatedTV, setTopRatedTV] = useState([]);
   const [airingTV, setAiringTV] = useState([]);
@@ -35,28 +35,45 @@ export default function TvShowsPage({ language }) {
   };
 
   useEffect(() => {
-    const fetchAllShows = async () => {
+    const fetchShows = async () => {
       setLoading(true);
       setError(null);
-      try {
-        const [popularRes, topRatedRes, airingRes] = await Promise.all([
-          tmdbApi.get(`/tv/popular`),
-          tmdbApi.get(`/tv/top_rated`),
-          tmdbApi.get(`/tv/on_the_air`),
-        ]);
 
+      try {
+        const popularRes = await tmdbApi.get(
+          `/tv/popular?language=${language}`
+        );
         setPopularTV(popularRes.data.results);
-        setTopRatedTV(topRatedRes.data.results);
-        setAiringTV(airingRes.data.results);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
+      } catch (err) {
+        console.error("Failed to fetch popular TV shows:", err);
+        setPopularTV([]); // or keep it null
       }
+
+      try {
+        const topRatedRes = await tmdbApi.get(
+          `/tv/top_rated?language=${language}`
+        );
+        setTopRatedTV(topRatedRes.data.results);
+      } catch (err) {
+        console.error("Failed to fetch top rated TV shows:", err);
+        setTopRatedTV([]);
+      }
+
+      try {
+        const airingRes = await tmdbApi.get(
+          `/tv/on_the_air?language=${language}`
+        );
+        setAiringTV(airingRes.data.results);
+      } catch (err) {
+        console.error("Failed to fetch airing TV shows:", err);
+        setAiringTV([]);
+      }
+
+      setLoading(false);
     };
 
-    fetchAllShows();
-  }, []);
+    fetchShows();
+  }, [language]);
 
   if (loading) {
     return (
@@ -91,7 +108,12 @@ export default function TvShowsPage({ language }) {
           </Link>
         </div>
 
-        <ShowsSlider language={language} shows={category.data} title={category.title} type={type} />
+        <ShowsSlider
+          language={language}
+          shows={category.data}
+          title={category.title}
+          type={type}
+        />
       </div>
     );
   };

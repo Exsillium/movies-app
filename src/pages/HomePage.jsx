@@ -6,11 +6,9 @@ import useTrendingMovies from "../hooks/swr/movies/useTrendingMovies";
 import useTrendingTv from "../hooks/swr/tv/useTrendingTv";
 import useUpcomingMovies from "../hooks/swr/movies/useUpcomingMovies";
 import SectionTitle from "../components/layout/section/SectionTitle";
-import translations from "../translations";
-
-export default function HomePage({language}) {
-  // Get the current language from translations
-  const t = translations[language] || translations.en;
+import { useLanguage } from "../LanguageContext";
+export default function HomePage() {
+  const { t, language } = useLanguage();
 
   const accountData = useSelector((state) => state.accountData);
   // Fetch trending movies and shows

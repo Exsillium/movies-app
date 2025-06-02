@@ -3,16 +3,23 @@ import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import AccountDropdown from "./accountDropdown";
 import SearchInput from "./SearchInput";
-import translations from "../../../translations";
+import { useLanguage } from "../../../LanguageContext"; 
 
-export default function Navbar({
-  currentTheme,
-  toggleTheme,
-  language,
-  setLanguage,
-}) {
-  const t = translations[language];
+export default function Navbar({ currentTheme, toggleTheme }) {
   const sessionId = useSelector((state) => state.sessionId);
+
+  const { language, setLanguage, t, setApiLanguage } = useLanguage();
+
+  function handleLanguageChange(e) {
+    const newLang = e.target.value;
+
+    
+    setLanguage(newLang);
+    setApiLanguage && setApiLanguage(newLang);
+
+    localStorage.setItem("language", newLang);
+    document.body.setAttribute("dir", newLang === "ar" ? "rtl" : "ltr");
+  }
 
   return (
     <BsNavbar
@@ -53,15 +60,7 @@ export default function Navbar({
             <select
               className="language-select"
               value={language}
-              onChange={(e) => {
-                const newLang = e.target.value;
-                setLanguage(newLang);
-                localStorage.setItem("language", newLang);
-                document.body.setAttribute(
-                  "dir",
-                  newLang === "ar" ? "rtl" : "ltr"
-                );
-              }}
+              onChange={handleLanguageChange}
             >
               <option value="en">EN</option>
               <option value="fr">FR</option>
