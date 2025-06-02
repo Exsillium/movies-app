@@ -67,6 +67,7 @@ const translations = {
     country: "Country",
     watchnow: "Watch Now",
     goBackHome: "Go Back Home",
+    appname: "🎬 Movies App",
   },
   ar: {
     home: "الصفحة الرئيسية",
@@ -136,6 +137,7 @@ const translations = {
     country: "الدولة",
     watchnow: "مشاهدة الان",
     goBackHome: "العودة إلى الصفحة الرئيسية",
+    appname: "🎬  موفيز أب",
   },
   fr: {
     home: "Accueil",
@@ -205,6 +207,7 @@ const translations = {
     country: "Pays",
     watchnow: "Regarder maintenant",
     goBackHome: "Retour à l'accueil",
+    appname: "🎬 Application de Films",
   },
   zh: {
     home: "首页",
@@ -274,6 +277,7 @@ const translations = {
     country: "国家",
     watchnow: "立即观看",
     goBackHome: "返回首页",
+    appname: "🎬 电影应用",
   },
 };
 

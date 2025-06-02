@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { tmdbApi } from "../apis/config";
-import translations from "../translations";
+import { useLanguage } from "../LanguageContext";
 
-export default function TvShowModal({ show, isOpen, onClose, type , language }) {
-  const t = translations[language] || translations.en;
+export default function TvShowModal({ show, isOpen, onClose, type }) {
+  const { t, language } = useLanguage();
   const navigate = useNavigate();
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -19,7 +19,7 @@ export default function TvShowModal({ show, isOpen, onClose, type , language }) 
       setLoading(true);
       setError(null);
       tmdbApi
-        .get(endpoint)
+        .get(endpoint, { params: { language } }) 
         .then((response) => {
           setDetails(response.data);
           setLoading(false);
@@ -29,7 +29,7 @@ export default function TvShowModal({ show, isOpen, onClose, type , language }) 
           setLoading(false);
         });
     }
-  }, [isOpen, show, endpoint]);
+  }, [isOpen, show, endpoint, language]);
 
   if (!isOpen) return null;
 

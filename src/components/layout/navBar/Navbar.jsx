@@ -33,7 +33,7 @@ export default function Navbar({ currentTheme, toggleTheme }) {
     >
       <Container>
         <BsNavbar.Brand as={NavLink} to="/" className="fw-bold fs-4">
-          🎬 Movies App
+          {t.appname}
         </BsNavbar.Brand>
         <BsNavbar.Toggle aria-controls="basic-navbar-nav" />
         <BsNavbar.Collapse id="basic-navbar-nav">
