@@ -1,30 +1,47 @@
+import { NavDropdown } from "react-bootstrap";
 import { useLanguage } from "../../../LanguageContext";
+import { MdLanguage } from "react-icons/md"; // Import an icon
 
 const LangToggler = () => {
-	const { language, setLanguage, t, setApiLanguage } = useLanguage();
+	const { language, setLanguage, setApiLanguage } = useLanguage();
 
-	function handleLanguageChange(e) {
-		const newLang = e.target.value;
-
+	function handleLanguageChange(newLang) {
 		setLanguage(newLang);
 		setApiLanguage && setApiLanguage(newLang);
 
 		localStorage.setItem("language", newLang);
 		document.body.setAttribute("dir", newLang === "ar" ? "rtl" : "ltr");
 	}
+
+	const languages = [
+		{ code: "en", name: "EN" },
+		{ code: "fr", name: "FR" },
+		{ code: "ar", name: "AR" },
+		{ code: "zh", name: "ZH" },
+	];
+
 	return (
-		<Nav className="px-4 px-lg-0">
-			<select
-				style={{ maxWidth: "100px" }}
-				className="language-select  my-2"
-				value={language}
-				onChange={handleLanguageChange}
-			>
-				<option value="en">EN</option>
-				<option value="fr">FR</option>
-				<option value="ar">AR</option>
-				<option value="zh">ZH</option>
-			</select>
-		</Nav>
+		<NavDropdown
+			title={
+				<>
+					<MdLanguage size={20} className="me-1" />
+					{language.toUpperCase()}
+				</>
+			}
+			id="language-dropdown"
+			align="end"
+			className="fw-semibold mx-lg-2"
+		>
+			{languages.map((lang) => (
+				<NavDropdown.Item
+					key={lang.code}
+					onClick={() => handleLanguageChange(lang.code)}
+					active={language === lang.code}
+				>
+					{lang.name}
+				</NavDropdown.Item>
+			))}
+		</NavDropdown>
 	);
 };
+export default LangToggler;
